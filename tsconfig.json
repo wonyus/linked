@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,9 +23,36 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@Switch/*": [
+        "./app/components/Switch/*"
+      ],
+      "@Redux/*": [
+        "./app/redux/*"
+      ],
+      "@Components/*": [
+        "./app/components/*"
+      ],
+      "@App/*": [
+        "./app/*"
+      ],
+      "@Utils/*": [
+        "./utils/*"
+      ],
+      "@Interface/*": [
+        "./interfaces/*"
+      ],
+      "@/*": [
+        "./*"
+      ],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
