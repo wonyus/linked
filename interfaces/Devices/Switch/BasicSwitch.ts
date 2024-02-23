@@ -1,5 +1,5 @@
 
-export interface SwitchData {
+export interface ISwitchData {
   client_id: string;
   switch_id: number;
   status: boolean;
@@ -11,7 +11,7 @@ export interface Device {
   id: number;
   client_id: string;
   status_online: boolean;
-  data: SwitchData[];
+  data: ISwitchData[];
   name: string;
 }
 

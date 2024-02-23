@@ -1,4 +1,5 @@
 import { getCsrfToken } from "next-auth/react";
+
 import { axiosDefault } from "./axios";
 
 export const fetchSession = async () => {

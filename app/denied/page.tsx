@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material";
 
 export default function Denied() {

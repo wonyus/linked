@@ -1,6 +1,7 @@
 // Ref: https://next-auth.js.org/configuration/nextjs#advanced-usage
-import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
+import { NextRequestWithAuth,withAuth } from "next-auth/middleware";
+
 import { apiAuthPrefix, authRoutes, publicRoutes } from "./routes";
 
 export default withAuth(
@@ -13,7 +14,7 @@ export default withAuth(
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
+    console.log(isApiAuthRoute, isPublicRoute, isAuthRoute)
     if (request.nextUrl.pathname.startsWith("/extra") && request.nextauth.token?.role !== "admin") {
       return NextResponse.rewrite(new URL("/denied", request.url));
     }

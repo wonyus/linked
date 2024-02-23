@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { fetchSession, getRefreshToken, updateSession } from "./axiosAuth";
 const BASE_URL = "http://localhost:4000/v1";
 

@@ -1,0 +1,12 @@
+{
+    "data":{
+        "clientid": "${clientid}",
+        "event": "${event}",
+        "payload": ${payload},
+        "publish_received_at": ${publish_received_at},
+        "qos": ${qos},
+        "timestamp": ${timestamp},
+        "topic": "${topic}",
+        "username": "${username}"
+    }
+}

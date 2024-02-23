@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import { useSearchParams } from "next/navigation";
 import { Button, Container, TextField } from "@mui/material";
+import { useSearchParams } from "next/navigation";
+import React from "react";
 
 const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -12,7 +12,6 @@ const LoginForm = () => {
   const [password, setPassword] = React.useState("");
 
   const handleSubmit = () => {
-    
   };
   return (
     <Container>

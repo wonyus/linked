@@ -1,4 +1,3 @@
-import axiosInstance from "@App/http/axios";
 
 type ResponseData = {
   message: string;

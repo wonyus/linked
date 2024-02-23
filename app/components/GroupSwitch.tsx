@@ -1,14 +1,15 @@
 "use client";
-import * as React from "react";
-import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
-import { Grid, Icon, Switch, Typography } from "@mui/material";
+import { Device, ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import Image from "next/image";
-import { Device, SwitchData } from "@Interface/Devices/Switch/BasicSwitch";
-import { BasicSwitch } from "./Switch";
+import { Grid, Icon, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import Image from "next/image";
+import * as React from "react";
+
+import { BasicSwitch } from "./Switch";
 
 const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
   // width: "",
@@ -19,6 +20,7 @@ const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
   textAlign: "center",
 }));
 
+/*eslint no-unused-vars: "off"*/
 interface Props {
   data: Device;
   handleChange: (clientId: string, switchId: number, checked: boolean) => void;
@@ -37,7 +39,7 @@ const GroupSwitch = (props: Props) => {
         </Icon>
       </Stack>
       <Grid container key={props.data.id} rowSpacing={2} columnSpacing={2} sx={{ paddingTop: 1 }}>
-        {props.data?.data?.map((device: SwitchData) => (
+        {props.data?.data?.map((device: ISwitchData) => (
           <Grid item key={device.switch_id} xs>
             <BasicSwitch key={device.switch_id} data={device} handleChange={props.handleChange} />
           </Grid>

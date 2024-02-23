@@ -1,7 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { deviceSlice } from "./reducers/deviceSlice";
-import logger from "redux-logger";
 import { Middleware } from "redux";
+import logger from "redux-logger";
+
+import { deviceSlice } from "./reducers/deviceSlice";
 
 const rootReducer = combineReducers({
   [deviceSlice.name]: deviceSlice.reducer,

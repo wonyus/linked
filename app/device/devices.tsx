@@ -1,14 +1,13 @@
 "use client";
-import BasicSwitch from "@Switch/BasicSwitch";
-import ReduxWrapper from "@Redux/Provider";
-import { useAppDispatch, useAppSelector } from "@Redux/hooks";
-import { Button, Grid } from "@mui/material";
-import { useEffect } from "react";
-import { getAllDevices, updateDevice } from "@Redux/reducers/deviceSlice";
-import { IBasicSwitchCommit } from "@Interface/Devices/Switch/BasicSwitch";
-import { stringifyPublishMessage } from "@Utils/FormatPublishMessage";
-import { defaultPublishMessage } from "@Interface/Mesages/Message";
 import GroupSwitch from "@Components/GroupSwitch";
+import { IBasicSwitchCommit } from "@Interface/Devices/Switch/BasicSwitch";
+import { defaultPublishMessage } from "@Interface/Mesages/Message";
+import { Button, Grid } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@Redux/hooks";
+import ReduxWrapper from "@Redux/Provider";
+import { getAllDevices, updateDevice } from "@Redux/reducers/deviceSlice";
+import { stringifyPublishMessage } from "@Utils/FormatPublishMessage";
+import { useEffect } from "react";
 
 const Devices = () => {
   const devicesData = useAppSelector((state) => state.devices);
@@ -20,7 +19,11 @@ const Devices = () => {
   };
 
   useEffect(() => {
-    getData();
+    getData(); // Call once when component mounts
+    const intervalId = setInterval(getData, 15000); // Dispatch every 15 seconds
+    return () => clearInterval(intervalId); // Cleanup on unmount
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (clientId: string, switchId: number, checked: boolean) => {
@@ -30,6 +33,7 @@ const Devices = () => {
     data.payload = [payload];
     dispatch(updateDevice(stringifyPublishMessage(data)));
   };
+
   return (
     <>
       <Grid container rowSpacing={2} columnSpacing={2}>

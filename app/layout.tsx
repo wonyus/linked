@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import AuthProvider from "./context/AuthProvider";
+
+import Theme from "@App/theme";
 import Navbar from "@Components/Navbar";
 import { ThemeProvider } from "@mui/material";
-import Theme from "@App/theme";
+import type { Metadata } from "next";
+
+import AuthProvider from "./context/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",

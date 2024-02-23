@@ -1,7 +1,9 @@
-import UserCard from "../components/UserCard";
 import { redirect } from "next/navigation";
-import Devices from "./devices";
+
 import { useCurresntUser } from "@/lib/auth";
+
+import UserCard from "../components/UserCard";
+import Devices from "./devices";
 
 export default async function DevicePage() {
   const user = await useCurresntUser();

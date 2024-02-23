@@ -1,12 +1,10 @@
 "use client";
-import * as React from "react";
-import Stack from "@mui/material/Stack";
+import { ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
+import { Switch, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import { Icon, Switch, Typography } from "@mui/material";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import Image from "next/image";
-import { Device, IBasicSwitch, SwitchData } from "@Interface/Devices/Switch/BasicSwitch";
+import * as React from "react";
 
 const BasicSwitchStyled = styled(Paper)(({ theme }) => ({
   width: 90,
@@ -18,7 +16,7 @@ const BasicSwitchStyled = styled(Paper)(({ theme }) => ({
 }));
 
 interface Props {
-  data: SwitchData;
+  data: ISwitchData;
   handleChange: (clientId: string, switchId: number, checked: boolean) => void;
 }
 

@@ -71,7 +71,6 @@ export const deviceSlice = createSlice({
   extraReducers: (builder) => {
     getAllDevices;
     builder.addCase(getAllDevices.pending, (state) => {
-      state.devices = [];
       state.status = "loading";
     });
     builder.addCase(getAllDevices.fulfilled, (state, action) => {
