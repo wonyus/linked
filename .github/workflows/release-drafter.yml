@@ -1,14 +1,11 @@
 name: Release Drafter
-
 on:
   push:
     branches:
       - development
 
-
 permissions:
   contents: read
-
 
 jobs:
   update_release_draft:
@@ -19,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5
+        with:
+            node-version: '20'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
