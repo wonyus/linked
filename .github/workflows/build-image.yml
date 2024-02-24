@@ -38,4 +38,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: wonyus/node-emqx:latest, wonyus/node-emqx:${{ steps.commit.outputs.short }}
+          tags: wonyus/linked:latest, wonyus/linked:${{ steps.commit.outputs.short }}
