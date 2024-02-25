@@ -26,12 +26,12 @@ jobs:
           ref: main
           token: ${{ secrets.PAT }}
           path: env
-          sparse-checkout: |
-            linked/.env
-          sparse-checkout-cone-mode: false
       
       - name: list files2
-        run: ls -la
+        run: ls -la 
+
+      - name: list files3
+        run: ls -la env
 
       - name: Get last tag
         id: get_last_tag
