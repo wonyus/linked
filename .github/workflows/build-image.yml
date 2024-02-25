@@ -16,6 +16,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: actions/checkout@v4
+        with:
+          repository: wonyus/ci
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: linked
+          sparse-checkout: .env
+          sparse-checkout-cone-mode: false
+
       - name: Get last tag
         id: get_last_tag
         run: echo "GIT_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
@@ -25,7 +33,7 @@ jobs:
         with:
           # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
           path: |
-            ~/.npm
+            ~/.yarn
             ${{ github.workspace }}/.next/cache
           # Generate a new cache whenever packages or source files change.
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
