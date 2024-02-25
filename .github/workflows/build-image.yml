@@ -31,7 +31,7 @@ jobs:
         run: ls -la 
 
       - name: list files3
-        run: ls -la env
+        run: ls -la env/linked
 
       - name: Get last tag
         id: get_last_tag
