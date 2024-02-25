@@ -25,7 +25,7 @@ jobs:
           repository: wonyus/ci
           ref: main
           token: ${{ secrets.PAT }}
-          path: .
+          path: env
           sparse-checkout: |
             linked/.env
           sparse-checkout-cone-mode: false
