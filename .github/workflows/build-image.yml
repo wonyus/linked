@@ -20,8 +20,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: wonyus/ci
+          ref: master
           token: ${{ secrets.GITHUB_TOKEN }}
-          sparse-checkout: README.md
+          sparse-checkout: |
+            README.md
           sparse-checkout-cone-mode: false
 
       - name: Get last tag
