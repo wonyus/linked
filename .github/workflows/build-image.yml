@@ -28,10 +28,13 @@ jobs:
           path: env
       
       - name: list files2
-        run: ls -la 
+        run: ls -la env/linked
+      
+      - name: coppy env
+        run: cp env/linked/.env .env
 
       - name: list files3
-        run: ls -la env/linked
+        run: ls -la
 
       - name: Get last tag
         id: get_last_tag
