@@ -16,7 +16,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
+      - name: Checkout env
+        uses: actions/checkout@v4
         with:
           repository: wonyus/ci
           token: ${{ secrets.GITHUB_TOKEN }}
