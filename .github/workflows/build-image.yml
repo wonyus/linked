@@ -20,7 +20,7 @@ jobs:
         with:
           repository: wonyus/ci
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: linked
+          path: .
           sparse-checkout: .env
           sparse-checkout-cone-mode: false
 
