@@ -26,7 +26,10 @@ jobs:
           sparse-checkout: |
             linked/.env
           sparse-checkout-cone-mode: false
-
+      
+      - name: list files
+        run: ls -la
+        
       - name: Get last tag
         id: get_last_tag
         run: echo "GIT_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
