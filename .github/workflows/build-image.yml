@@ -16,6 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: list files1
+        run: ls -la
+
       - name: Checkout env
         uses: actions/checkout@v4
         with:
@@ -27,9 +30,9 @@ jobs:
             linked/.env
           sparse-checkout-cone-mode: false
       
-      - name: list files
+      - name: list files2
         run: ls -la
-        
+
       - name: Get last tag
         id: get_last_tag
         run: echo "GIT_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
