@@ -3,7 +3,7 @@ import axios from "axios";
 import { fetchSession, getRefreshToken, updateSession } from "./axiosAuth";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.MIDDLEWARE_URL,
+  baseURL: process.env.SERVER_URL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -66,7 +66,7 @@ axiosInstance.interceptors.response.use(
 export default axiosInstance;
 
 export const axiosDefault = axios.create({
-  baseURL: process.env.MIDDLEWARE_URL,
+  baseURL: process.env.SERVER_URL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
