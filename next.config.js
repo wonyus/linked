@@ -1,7 +1,13 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    output: process.env.BUILD_STANDALONE === "true" ? "standalone" : undefined,
+    cacheHandler: require.resolve('./cache-handler.js'),
+    cacheMaxMemorySize: 0, // disable default in-memory caching
+    output: process.env.BUILD_STANDALONE === "true" ? "standalone" : "standalone",
     reactStrictMode: false,
     images: {
         remotePatterns: [
@@ -14,6 +20,7 @@ const nextConfig = {
         ],
     },
     env: {
+        HOSTNAME: process.env.HOSTNAME,
         NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         GITHUB_ID: process.env.GITHUB_ID,
@@ -22,4 +29,4 @@ const nextConfig = {
     },
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig)

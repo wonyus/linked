@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "start": "next start",
-    "local": "node ./.next/standalone/server.js",
+    "start": "node .next/standalone/server.js",
     "lint": "next lint"
   },
   "dependencies": {
@@ -16,6 +15,7 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
     "@mui/styled-engine-sc": "^6.0.0-alpha.7",
+    "@next/bundle-analyzer": "^14.1.0",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.2",
     "next": "14.1.0",
@@ -26,6 +26,7 @@
     "react-redux": "^9.0.3",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
+    "sharp": "^0.33.2",
     "styled-components": "^6.1.1"
   },
   "devDependencies": {
