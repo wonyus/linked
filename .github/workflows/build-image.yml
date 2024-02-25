@@ -22,8 +22,9 @@ jobs:
           repository: wonyus/ci
           ref: main
           token: ${{ secrets.PAT }}
+          path: .
           sparse-checkout: |
-            README.md
+            linked/.env
           sparse-checkout-cone-mode: false
 
       - name: Get last tag
