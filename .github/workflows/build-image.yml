@@ -22,7 +22,7 @@ jobs:
           repository: wonyus/ci
           token: ${{ secrets.GITHUB_TOKEN }}
           path: .
-          sparse-checkout: .env
+          sparse-checkout: linked/.env
           sparse-checkout-cone-mode: false
 
       - name: Get last tag
