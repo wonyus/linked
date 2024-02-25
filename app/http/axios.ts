@@ -1,10 +1,9 @@
 import axios from "axios";
 
 import { fetchSession, getRefreshToken, updateSession } from "./axiosAuth";
-const BASE_URL = "http://localhost:4000/v1";
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.MIDDLEWARE_URL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -67,7 +66,7 @@ axiosInstance.interceptors.response.use(
 export default axiosInstance;
 
 export const axiosDefault = axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.MIDDLEWARE_URL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
