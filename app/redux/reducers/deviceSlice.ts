@@ -1,5 +1,5 @@
 import axiosInstance from "@App/http/axios";
-import { Device } from "@Interface/Devices/Switch/BasicSwitch";
+import { IDevice } from "@Interface/Devices/Switch/BasicSwitch";
 import { PublishMessage } from "@Interface/Mesages/Message";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -12,7 +12,7 @@ export interface DeviceUpdate {
 
 export interface DeviceState {
   status: string;
-  devices: Device[];
+  devices: IDevice[];
   error: null | string;
 }
 
@@ -50,11 +50,21 @@ export const fetchDevices = createAsyncThunk("devices/fetch", async (formData, {
   }
 });
 
-export const updateDevice = createAsyncThunk("devices/switch-basic/publish", async (formData: PublishMessage, { rejectWithValue }) => {
-  console.log(formData);
-
+export const updateSwitch = createAsyncThunk("devices/switch-basic/publish", async (formData: PublishMessage, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.post("/user/publish", formData);
+    return res.data;
+  } catch (err: any) {
+    const data: ErrorRejectedWithValue = {
+      message: "Error updating switch",
+    };
+    return rejectWithValue(data);
+  }
+});
+
+export const updateSwitchDevice = createAsyncThunk("devices/switch-basic/update", async (formData: IDevice, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.post("/device/switches/update", formData);
     return res.data;
   } catch (err: any) {
     const data: ErrorRejectedWithValue = {

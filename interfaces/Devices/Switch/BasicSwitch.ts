@@ -7,12 +7,12 @@ export interface ISwitchData {
   mqtt_client_id: string;
 }
 
-export interface Device {
+export interface IDevice {
   id: number;
   client_id: string;
+  name: string;
   status_online: boolean;
   data: ISwitchData[];
-  name: string;
 }
 
 export interface IBasicSwitchCommit {
