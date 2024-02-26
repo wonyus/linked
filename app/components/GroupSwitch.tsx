@@ -1,14 +1,15 @@
 "use client";
 import { IDevice, ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Backdrop, Box, Button, Grid, Icon, IconButton, TextField, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+
 import { BasicSwitch } from "./Switch";
 
 const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
