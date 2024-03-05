@@ -1,6 +1,9 @@
-export default async function Home() {
+import Scheduler from "@Components/Scheduler";
 
+export default async function Home() {
   return (
-    <h1 className="text-5xl">Public Home Page</h1>
-  )
+    <>
+      <h1 className="text-5xl">Public Home Page</h1>
+    </>
+  );
 }

@@ -1,3 +1,4 @@
+import { TSchedulerInitialValues } from "@Components/Scheduler";
 
 export interface ISwitchData {
   client_id: string;
@@ -5,6 +6,7 @@ export interface ISwitchData {
   status: boolean;
   name: string;
   mqtt_client_id: string;
+  scheduler: TSchedulerInitialValues;
 }
 
 export interface IDevice {

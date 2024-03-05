@@ -3,13 +3,13 @@ import { getCsrfToken } from "next-auth/react";
 import { axiosDefault } from "./axios";
 
 export const fetchSession = async () => {
-  console.log("fectSession");
+  // console.log("fectSession");
   const session = await fetch("/api/auth/session");
   return session;
 };
 
 export const updateSession = async (newSession: Record<string, any>) => {
-  console.log("updateSession");
+  // console.log("updateSession");
 
   await fetch(`/api/auth/session`, {
     method: "POST",
@@ -24,7 +24,7 @@ export const updateSession = async (newSession: Record<string, any>) => {
 };
 
 export const getRefreshToken = async (refreshToken: string) => {
-  console.log("getRefreshToken", refreshToken);
+  // console.log("getRefreshToken", refreshToken);
   const res = await axiosDefault.post(
     `/user/refresh`,
     {},

@@ -1,6 +1,7 @@
 "use client";
 // Remember you must use an AuthProvider for
 // client components to useSession
+import Scheduler from "@Components/Scheduler";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 

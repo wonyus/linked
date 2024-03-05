@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material";
 import type { Metadata } from "next";
 
 import AuthProvider from "./context/AuthProvider";
+import LocalizeDate from "./LocalizeDate";
 
 export const metadata: Metadata = {
   title: "Linked",
@@ -15,14 +16,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <AuthProvider>
+      <LocalizeDate>
+        <AuthProvider>
           <ThemeProvider theme={Theme}>
             <body>
               <Navbar />
               <main style={{ margin: 20 }}>{children}</main>
             </body>
           </ThemeProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </LocalizeDate>
     </html>
   );
 }

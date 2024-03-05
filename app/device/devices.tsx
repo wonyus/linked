@@ -20,8 +20,8 @@ const Devices = () => {
 
   useEffect(() => {
     getData(); // Call once when component mounts
-    const intervalId = setInterval(getData, 15000); // Dispatch every 15 seconds
-    return () => clearInterval(intervalId); // Cleanup on unmount
+    // const intervalId = setInterval(getData, 15000); // Dispatch every 15 seconds
+    // return () => clearInterval(intervalId); // Cleanup on unmount
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -35,10 +35,13 @@ const Devices = () => {
   };
 
   const handleUpdateDevice = async (device: IDevice) => {
-    const unwrap = await dispatch(updateSwitchDevice(device)).unwrap();
-    if (unwrap === "success") {
-      getData();
-    }
+    await dispatch(updateSwitchDevice(device))
+      .unwrap()
+      .then((res) => {
+        if (res.message === "success") {
+          getData();
+        }
+      });
   };
 
   return (
@@ -48,7 +51,7 @@ const Devices = () => {
           data?.map((device) => {
             return (
               <Grid item key={device.id}>
-                <GroupSwitch key={device.id} data={device} handleChange={handleChange} handleUpdateDevice={handleUpdateDevice} />
+                <GroupSwitch key={device.id} data={device} onChange={handleChange} onUpdate={handleUpdateDevice} />
               </Grid>
             );
           })}

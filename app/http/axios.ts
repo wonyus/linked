@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    console.log(config.headers["Authorization"]);
+    // console.log(config.headers["Authorization"]);
 
     const session = await fetchSession();
     const data = await session.json();
@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
       const accessToken = resData.result.accessToken;
 
       if (accessToken) {
-        console.log("Access token refreshed!");
+        // console.log("Access token refreshed!");
 
         // Update the server-side session with the new access token
         await updateSession({ user: { accessToken: resData.result.accessToken, refreshToken: resData.result.refreshToken } });

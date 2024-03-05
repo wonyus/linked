@@ -3,13 +3,14 @@ import { IDevice, ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { Backdrop, Box, Button, Grid, Icon, IconButton, TextField, Typography } from "@mui/material";
+import { Backdrop, Box, Button, Grid, Icon, IconButton, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 
+import MapScheduler from "./MapScheduler";
 import { BasicSwitch } from "./Switch";
 
 const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
@@ -22,15 +23,25 @@ const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
 }));
 
 /*eslint no-unused-vars: "off"*/
-interface Props {
+interface GroupSwitchProps {
   data: IDevice;
-  handleChange: (clientId: string, switchId: number, checked: boolean) => void;
-  handleUpdateDevice: (device: IDevice) => void;
+  onChange: (clientId: string, switchId: number, checked: boolean) => void;
+  onUpdate: (device: IDevice) => void;
 }
 
-const GroupSwitch = (props: Props) => {
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+  paddingTop?: boolean;
+}
+
+const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
   const [open, setOpen] = React.useState(false);
-  const [device, setDevice] = React.useState<IDevice>(props.data ?? {});
+  const [device, setDevice] = React.useState<IDevice>(data ?? {});
+
+  const [tab, setTab] = React.useState(0);
+  const [schedulerTab, setSchedulerTab] = React.useState(0);
 
   const updateStateWithKey = (key: string, value: any) => {
     setDevice((prevState) => ({
@@ -41,7 +52,7 @@ const GroupSwitch = (props: Props) => {
 
   const handleClose = () => {
     setOpen((status) => !status);
-    setDevice(props.data ?? {});
+    setDevice(data ?? {});
   };
 
   const handleOpen = () => {
@@ -49,9 +60,35 @@ const GroupSwitch = (props: Props) => {
   };
 
   const handleUpdateDevice = (device: IDevice) => {
-    props.handleUpdateDevice(device);
+    setDevice(device);
+    onUpdate(device);
     setOpen(false);
   };
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTab(newValue);
+  };
+
+  function a11yProps(index: number) {
+    return {
+      id: `simple-tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
+
+  function CustomTabPanel(props: TabPanelProps) {
+    const { children, value, index, paddingTop = true, ...other } = props;
+
+    return (
+      <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+        {value === index && (
+          <Box sx={{ paddingTop: paddingTop ? undefined : 0 }}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
 
   return (
     <>
@@ -68,52 +105,67 @@ const GroupSwitch = (props: Props) => {
         <Grid container key={device.id} rowSpacing={2} columnSpacing={2} sx={{ paddingTop: 1 }}>
           {device?.data?.map((sw: ISwitchData) => (
             <Grid item key={sw.switch_id} xs>
-              <BasicSwitch key={sw.switch_id} data={sw} handleChange={props.handleChange} />
+              <BasicSwitch key={sw.switch_id} data={sw} handleChange={onChange} />
             </Grid>
           ))}
         </Grid>
       </GroupSwitchStyled>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
         <Box>
-          <Paper elevation={3}>
+          <Paper elevation={3} sx={{ width: 650, minHeight: 800, flexDirection: "column", display: "flex" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", padding: 1 }}>
-              <Typography variant="h6" sx={{ paddingLeft: 1 }}>
-                Settings
-              </Typography>
+              <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
+                <Tab label="General" {...a11yProps(0)} />
+                <Tab label="Scheduler" {...a11yProps(1)} />
+              </Tabs>
               <IconButton color="default" aria-label="settings" size="small" onClick={handleClose}>
                 <CloseOutlinedIcon />
               </IconButton>
             </Box>
-            <Grid container sx={{ padding: 1, width: 300 }}>
-              <TextField
-                id="outlined-basic"
-                label="Name"
-                variant="outlined"
-                value={device.name ?? ""}
-                fullWidth
-                onChange={(e) => {
-                  updateStateWithKey("name", e.target.value);
-                }}
-                sx={{ paddingBottom: 2 }}
-              />
-              {device?.data?.map((sw: ISwitchData, idx: number) => (
+
+            <CustomTabPanel value={tab} index={0}>
+              <Grid container sx={{ padding: 1, width: 300 }}>
                 <TextField
-                  key={idx}
-                  id={`switch ${idx + 1}`}
-                  label={`switch ${idx + 1}`}
+                  id="outlined-basic"
+                  label="Name"
                   variant="outlined"
-                  value={device.data[idx].name ?? ""}
+                  value={device.name ?? ""}
                   fullWidth
                   onChange={(e) => {
-                    let newState = [...device.data];
-                    newState[idx] = { ...newState[idx], name: e.target.value };
-                    updateStateWithKey("data", newState);
+                    updateStateWithKey("name", e.target.value);
                   }}
                   sx={{ paddingBottom: 2 }}
                 />
-              ))}
-            </Grid>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", padding: 1 }}>
+                {device?.data?.map((sw: ISwitchData, idx: number) => (
+                  <TextField
+                    key={idx}
+                    id={`switch ${idx + 1}`}
+                    label={`switch ${idx + 1}`}
+                    variant="outlined"
+                    value={device.data[idx].name ?? ""}
+                    fullWidth
+                    onChange={(e) => {
+                      let newState = [...device.data];
+                      newState[idx] = { ...newState[idx], name: e.target.value };
+                      updateStateWithKey("data", newState);
+                    }}
+                    sx={{ paddingBottom: 2 }}
+                  />
+                ))}
+              </Grid>
+            </CustomTabPanel>
+            <CustomTabPanel value={tab} index={1} paddingTop={false}>
+              <MapScheduler
+                values={device.data}
+                tab={schedulerTab}
+                onTabChange={setSchedulerTab}
+                onChange={(e) => {
+                  updateStateWithKey("data", e);
+                }}
+              />
+            </CustomTabPanel>
+
+            <Box sx={{ display: "flex", justifyContent: "flex-end", padding: 1, marginTop: "auto" }}>
               <Button variant="contained" color="success" onClick={() => handleUpdateDevice(device)} sx={{ marginRight: 1 }}>
                 Save
               </Button>
