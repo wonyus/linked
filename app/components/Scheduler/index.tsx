@@ -151,7 +151,7 @@ const Scheduler = ({ initialValues = initialValuesProps, onChange }: SchedulerPr
 
   const onTimeChange = (time: Dayjs, idx: number, type: "on" | "off") => {
     const newTimes = [...dataform.times!];
-    newTimes[idx] = type === "on" ? [time.format("YYYY-MM-DDTHH:mm:ss"), newTimes[idx][1]] : [newTimes[idx][0], time.format("YYYY-MM-DDTHH:mm:ss")];
+    newTimes[idx] = type === "on" ? [time.format("YYYY-MM-DDTHH:mm:ssZ"), newTimes[idx][1]] : [newTimes[idx][0], time.format("YYYY-MM-DDTHH:mm:ssZ")];
     handleChange(newTimes, "times");
   };
 
