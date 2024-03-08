@@ -1,5 +1,6 @@
 import { Button, Grid, Stack, ToggleButton, Typography } from "@mui/material";
 import React, { use } from "react";
+import { isMobile } from "react-device-detect";
 
 interface DayListProps {
   header: string;
@@ -62,23 +63,26 @@ const DayList = ({ header, days, dayName, onClearAll, onSelectAll, onSelectDay }
             </Typography>
           </Stack>
         </Grid>
-
-        {days.map(([key, value]) => (
-          <Grid item xs={1.5} key={key}>
-            <ToggleButton
-              value="check"
-              selected={value}
-              size="small"
-              onChange={() => {
-                onSelectDay(days, key, "days");
-              }}
-              defaultValue={key}
-              sx={{ width: 30, height: 30 }}
-            >
-              <Typography sx={{ fontSize: 12 }}>{dayName.get(key)}</Typography>
-            </ToggleButton>
+        <Grid item xs={12}>
+          <Grid container rowSpacing={1} columnSpacing={2}>
+            {days.map(([key, value]) => (
+              <Grid item xs={isMobile ? 2.6 : 1.61} key={key}>
+                <ToggleButton
+                  value="check"
+                  selected={value}
+                  size="small"
+                  onChange={() => {
+                    onSelectDay(days, key, "days");
+                  }}
+                  defaultValue={key}
+                  sx={{ width: 30, height: 30 }}
+                >
+                  <Typography sx={{ fontSize: 12 }}>{dayName.get(key)}</Typography>
+                </ToggleButton>
+              </Grid>
+            ))}
           </Grid>
-        ))}
+        </Grid>
       </Grid>
     </>
   );

@@ -1,5 +1,6 @@
 import { Grid, Stack, ToggleButton, Typography } from "@mui/material";
 import React from "react";
+import { isMobile } from "react-device-detect";
 
 interface DateListProps {
   header: string;
@@ -18,8 +19,6 @@ const DateList = ({ header, dates, onClearAll, onSelectAll, onSelectDate }: Date
         columnGap={0.5}
         columnSpacing={0}
         sx={{
-          height: 281,
-          maxWidth: 310,
           paddingLeft: 1.5,
           paddingBottom: 1.5,
           marginTop: 1,
@@ -62,23 +61,26 @@ const DateList = ({ header, dates, onClearAll, onSelectAll, onSelectDate }: Date
             </Typography>
           </Stack>
         </Grid>
-
-        {dates.map(([key, value]) => (
-          <Grid item xs={1.5} key={key}>
-            <ToggleButton
-              value="check"
-              selected={value}
-              size="small"
-              onChange={() => {
-                onSelectDate(dates, key, "dates");
-              }}
-              defaultValue={key}
-              sx={{ width: 30, height: 30 }}
-            >
-              <Typography sx={{ fontSize: 12 }}>{key}</Typography>
-            </ToggleButton>
+        <Grid item xs={12}>
+          <Grid container rowSpacing={1} columnSpacing={2}>
+            {dates.map(([key, value]) => (
+              <Grid item xs={isMobile ? 1.14 : 0.9} key={key}>
+                <ToggleButton
+                  value="check"
+                  selected={value}
+                  size="small"
+                  onChange={() => {
+                    onSelectDate(dates, key, "dates");
+                  }}
+                  defaultValue={key}
+                  sx={{ width: 30, height: 30 }}
+                >
+                  <Typography sx={{ fontSize: 12 }}>{key}</Typography>
+                </ToggleButton>
+              </Grid>
+            ))}
           </Grid>
-        ))}
+        </Grid>
       </Grid>
     </>
   );

@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import MapScheduler from "./MapScheduler";
 import { BasicSwitch } from "./Switch";
@@ -111,8 +112,11 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
         </Grid>
       </GroupSwitchStyled>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
-        <Box>
-          <Paper elevation={3} sx={{ width: 650, minHeight: 800, flexDirection: "column", display: "flex" }}>
+        <Box sx={{ alignSelf: "flex-start", marginTop: 10 }}>
+          <Paper
+            elevation={3}
+            sx={{ width: !isMobile ? 650 : undefined, minHeight: !isMobile ? 800 : undefined, flexDirection: "column", display: "flex" }}
+          >
             <Box sx={{ display: "flex", justifyContent: "space-between", padding: 1 }}>
               <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="General" {...a11yProps(0)} />
@@ -124,7 +128,7 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
             </Box>
 
             <CustomTabPanel value={tab} index={0}>
-              <Grid container sx={{ padding: 1, width: 300 }}>
+              <Grid container sx={{ padding: 1 }}>
                 <TextField
                   id="outlined-basic"
                   label="Name"

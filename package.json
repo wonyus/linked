@@ -26,6 +26,7 @@
     "next-auth": "^4.24.5",
     "next-redux-wrapper": "^8.1.0",
     "react": "^18",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18",
     "react-redux": "^9.0.3",
     "redux-logger": "^3.0.6",

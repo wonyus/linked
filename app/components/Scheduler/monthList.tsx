@@ -1,5 +1,6 @@
-import { Button, Grid, Stack, ToggleButton, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, ToggleButton, Typography } from "@mui/material";
 import React, { use } from "react";
+import { isMobile } from "react-device-detect";
 
 interface DayListProps {
   header: string;
@@ -19,7 +20,6 @@ const MonthList = ({ header, months, monthName, onClearAll, onSelectAll, onSelec
         columnGap={0.5}
         columnSpacing={0}
         sx={{
-          maxWidth: 280,
           paddingLeft: 1.5,
           paddingBottom: 1.5,
           marginTop: 1,
@@ -62,23 +62,26 @@ const MonthList = ({ header, months, monthName, onClearAll, onSelectAll, onSelec
             </Typography>
           </Stack>
         </Grid>
-
-        {months.map(([key, value]) => (
-          <Grid item xs={1.5} key={key}>
-            <ToggleButton
-              value="check"
-              selected={value}
-              size="small"
-              onChange={() => {
-                onSelectMonth(months, key, "months");
-              }}
-              defaultValue={key}
-              sx={{ width: 30, height: 30 }}
-            >
-              <Typography sx={{ fontSize: 12 }}>{monthName.get(key)}</Typography>
-            </ToggleButton>
+        <Grid item xs={12}>
+          <Grid container rowSpacing={1} columnSpacing={2}>
+            {months.map(([key, value]) => (
+              <Grid item xs={isMobile ? 1.8 : 1.6} key={key}>
+                <ToggleButton
+                  value="check"
+                  selected={value}
+                  size="small"
+                  onChange={() => {
+                    onSelectMonth(months, key, "months");
+                  }}
+                  defaultValue={key}
+                  sx={{ width: 30, height: 30 }}
+                >
+                  <Typography sx={{ fontSize: 12 }}>{monthName.get(key)}</Typography>
+                </ToggleButton>
+              </Grid>
+            ))}
           </Grid>
-        ))}
+        </Grid>
       </Grid>
     </>
   );

@@ -6,6 +6,7 @@ import DateList from "./dateList";
 import DayList from "./dayList";
 import MonthList from "./monthList";
 import TimeSettings from "./time";
+import { isMobile } from "react-device-detect";
 const mapDayNames = new Map([
   [0, "Su"],
   [1, "Mo"],
@@ -152,6 +153,8 @@ const Scheduler = ({ initialValues = initialValuesProps, onChange }: SchedulerPr
   const onTimeChange = (time: Dayjs, idx: number, type: "on" | "off") => {
     const newTimes = [...dataform.times!];
     newTimes[idx] = type === "on" ? [time.format("YYYY-MM-DDTHH:mm:ssZ"), newTimes[idx][1]] : [newTimes[idx][0], time.format("YYYY-MM-DDTHH:mm:ssZ")];
+    console.log(time.format("YYYY-MM-DDTHH:mm:ssZ"));
+
     handleChange(newTimes, "times");
   };
 
@@ -168,37 +171,32 @@ const Scheduler = ({ initialValues = initialValuesProps, onChange }: SchedulerPr
 
   return (
     <>
-      <Grid container justifyContent={"center"}>
-        <Grid item xs={6}>
-          <Grid container>
-            <Grid item xs={12}>
-              <DayList
-                header={"day of week"}
-                days={dataform.days}
-                dayName={mapDayNames}
-                onSelectDay={onChecked}
-                onClearAll={onClearAll}
-                onSelectAll={onSelectAll}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <MonthList
-                header={"month"}
-                months={dataform.months}
-                monthName={mapMonthNames}
-                onSelectMonth={onChecked}
-                onClearAll={onClearAll}
-                onSelectAll={onSelectAll}
-              />
-            </Grid>
-          </Grid>
+      <Grid container justifyContent={"space-between"} columnSpacing={isMobile ? 1 : undefined}>
+        <Grid item xs={isMobile ? 5 : 6}>
+          <DayList
+            header={"day of week"}
+            days={dataform.days}
+            dayName={mapDayNames}
+            onSelectDay={onChecked}
+            onClearAll={onClearAll}
+            onSelectAll={onSelectAll}
+          />
         </Grid>
-        <Grid item xs={6}>
-          <Grid container rowSpacing={1} columnSpacing={1} sx={{ marginTop: 0, marginBottom: 0 }}>
-            <DateList header={"date of month"} dates={dataform.dates} onSelectDate={onChecked} onClearAll={onClearAll} onSelectAll={onSelectAll} />
-          </Grid>
+        <Grid item xs={isMobile ? 7 : 6}>
+          <MonthList
+            header={"month"}
+            months={dataform.months}
+            monthName={mapMonthNames}
+            onSelectMonth={onChecked}
+            onClearAll={onClearAll}
+            onSelectAll={onSelectAll}
+          />
         </Grid>
-        <Grid item xs={9}>
+
+        <Grid item xs={12}>
+          <DateList header={"date of month"} dates={dataform.dates} onSelectDate={onChecked} onClearAll={onClearAll} onSelectAll={onSelectAll} />
+        </Grid>
+        <Grid item xs={isMobile ? 12 : 9}>
           <TimeSettings header={"time setting"} times={convertStringToDate(dataform.times)} onChange={onTimeChange} onRemove={onRemoveTime} />
         </Grid>
       </Grid>
