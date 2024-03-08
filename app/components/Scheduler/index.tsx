@@ -1,12 +1,12 @@
 import { Grid } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import React, { Suspense, use } from "react";
+import { isMobile } from "react-device-detect";
 
 import DateList from "./dateList";
 import DayList from "./dayList";
 import MonthList from "./monthList";
 import TimeSettings from "./time";
-import { isMobile } from "react-device-detect";
 const mapDayNames = new Map([
   [0, "Su"],
   [1, "Mo"],

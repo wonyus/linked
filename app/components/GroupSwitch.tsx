@@ -151,7 +151,7 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
                     onChange={(e) => {
                       let newState = [...device.data];
                       newState[idx] = { ...newState[idx], name: e.target.value };
-                      updateStateWithKey("data", newState);
+                      // updateStateWithKey("data", newState);
                     }}
                     sx={{ paddingBottom: 2 }}
                   />
