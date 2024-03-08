@@ -111,11 +111,16 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
           ))}
         </Grid>
       </GroupSwitchStyled>
-      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
-        <Box sx={{ alignSelf: "flex-start", marginTop: 10 }}>
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, overflowY: "scroll" }} open={open}>
+        <Box sx={{ alignSelf: "flex-start", marginTop: 5 }}>
           <Paper
             elevation={3}
-            sx={{ width: !isMobile ? 650 : undefined, minHeight: !isMobile ? 800 : undefined, flexDirection: "column", display: "flex" }}
+            sx={{
+              width: !isMobile ? 650 : undefined,
+              minHeight: !isMobile ? 800 : undefined,
+              flexDirection: "column",
+              display: "flex",
+            }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between", padding: 1 }}>
               <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
