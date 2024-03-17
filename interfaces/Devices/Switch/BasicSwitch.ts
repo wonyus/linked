@@ -7,6 +7,7 @@ export interface ISwitchData {
   name: string;
   mqtt_client_id: string;
   scheduler: TSchedulerInitialValues;
+  scheduler_active: boolean;
 }
 
 export interface IDevice {

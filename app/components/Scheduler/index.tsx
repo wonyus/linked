@@ -1,4 +1,5 @@
-import { Grid } from "@mui/material";
+import { Box, Button, Grid, Stack, Switch, Typography } from "@mui/material";
+import BasicSwitch from "@Switch/BasicSwitch";
 import dayjs, { Dayjs } from "dayjs";
 import React, { Suspense, use } from "react";
 import { isMobile } from "react-device-detect";
@@ -104,7 +105,9 @@ export type TSchedulerInitialValues = {
 };
 interface SchedulerProps {
   initialValues: TSchedulerInitialValues;
+  initialValueActive: boolean;
   onChange: (values: TSchedulerInitialValues) => void;
+  onCheckActive: (val: boolean) => void;
 }
 export const initialValuesProps: TSchedulerInitialValues = {
   days: Array.from(mapDays),
@@ -113,7 +116,7 @@ export const initialValuesProps: TSchedulerInitialValues = {
   times: mapTimes,
 };
 
-const Scheduler = ({ initialValues = initialValuesProps, onChange }: SchedulerProps) => {
+const Scheduler = ({ initialValues = initialValuesProps, initialValueActive, onChange, onCheckActive }: SchedulerProps) => {
   const dataform = React.useDeferredValue(initialValues);
 
   const handleChange = (values: [number, boolean][] | [string, string][], type: string) => {
@@ -172,6 +175,14 @@ const Scheduler = ({ initialValues = initialValuesProps, onChange }: SchedulerPr
   return (
     <>
       <Grid container justifyContent={"space-between"} columnSpacing={isMobile ? 1 : undefined}>
+        <Grid item xs={12}>
+          <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignContent: "center" }}>
+              <Typography sx={{ alignSelf: "center" }}>Enable Scheduler</Typography>
+              <Switch checked={initialValueActive} onChange={(_, checked) => onCheckActive(checked)} />
+            </Box>
+          </Stack>
+        </Grid>
         <Grid item xs={isMobile ? 5 : 6}>
           <DayList
             header={"day of week"}

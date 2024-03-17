@@ -26,7 +26,7 @@ const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
 /*eslint no-unused-vars: "off"*/
 interface GroupSwitchProps {
   data: IDevice;
-  onChange: (clientId: string, switchId: number, checked: boolean) => void;
+  onSwitchChange: (clientId: string, switchId: number, checked: boolean) => void;
   onUpdate: (device: IDevice) => void;
 }
 
@@ -37,7 +37,7 @@ interface TabPanelProps {
   paddingTop?: boolean;
 }
 
-const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
+const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
   const [open, setOpen] = React.useState(false);
   const [device, setDevice] = React.useState<IDevice>(data ?? {});
 
@@ -82,11 +82,7 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
 
     return (
       <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
-        {value === index && (
-          <Box sx={{ paddingTop: paddingTop ? undefined : 0 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
+        {value === index && <Box sx={{ paddingTop: paddingTop ? undefined : 0 }}>{children}</Box>}
       </div>
     );
   }
@@ -106,7 +102,7 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
         <Grid container key={device.id} rowSpacing={2} columnSpacing={2} sx={{ paddingTop: 1 }}>
           {device?.data?.map((sw: ISwitchData) => (
             <Grid item key={sw.switch_id} xs>
-              <BasicSwitch key={sw.switch_id} data={sw} handleChange={onChange} />
+              <BasicSwitch key={sw.switch_id} data={sw} handleChange={onSwitchChange} />
             </Grid>
           ))}
         </Grid>
@@ -135,6 +131,7 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
             <CustomTabPanel value={tab} index={0}>
               <Grid container sx={{ padding: 1 }}>
                 <TextField
+                  key={device.id}
                   id="outlined-basic"
                   label="Name"
                   variant="outlined"
@@ -147,11 +144,11 @@ const GroupSwitch = ({ data, onChange, onUpdate }: GroupSwitchProps) => {
                 />
                 {device?.data?.map((sw: ISwitchData, idx: number) => (
                   <TextField
-                    key={idx}
+                    key={sw.switch_id}
                     id={`switch ${idx + 1}`}
                     label={`switch ${idx + 1}`}
                     variant="outlined"
-                    value={device.data[idx].name ?? ""}
+                    value={sw.name ?? ""}
                     fullWidth
                     onChange={(e) => {
                       let newState = [...device.data];

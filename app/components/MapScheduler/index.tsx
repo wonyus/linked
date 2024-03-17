@@ -30,17 +30,19 @@ const MapScheduler = ({ values, onChange, tab, onTabChange }: MapSchedulerProps)
     const { children, value, index, ...other } = props;
     return (
       <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
+        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
       </div>
     );
   }
   const handleTimeChange = (scheduler: TSchedulerInitialValues, idx: number) => {
     const newValues: ISwitchData[] = values.map((v) => ({ ...v }));
     newValues[idx].scheduler = scheduler;
+    onChange(newValues);
+  };
+
+  const handleActiveChange = (active: boolean, idx: number) => {
+    const newValues: ISwitchData[] = values.map((v) => ({ ...v }));
+    newValues[idx].scheduler_active = active;
     onChange(newValues);
   };
   return (
@@ -56,7 +58,12 @@ const MapScheduler = ({ values, onChange, tab, onTabChange }: MapSchedulerProps)
           values.map((value, idx) => {
             return (
               <CustomTabPanel value={tab} key={idx} index={idx}>
-                <Scheduler initialValues={value.scheduler} onChange={(e) => handleTimeChange(e, idx)} />
+                <Scheduler
+                  initialValues={value.scheduler}
+                  initialValueActive={value.scheduler_active}
+                  onCheckActive={(val) => handleActiveChange(val, idx)}
+                  onChange={(e) => handleTimeChange(e, idx)}
+                />
               </CustomTabPanel>
             );
           })}

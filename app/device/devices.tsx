@@ -26,7 +26,7 @@ const Devices = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChange = (clientId: string, switchId: number, checked: boolean) => {
+  const handleSwitchChange = (clientId: string, switchId: number, checked: boolean) => {
     const data = defaultPublishMessage;
     data.topic = "/command/" + clientId + "/switch";
     const payload: IBasicSwitchCommit = { id: switchId, status: checked };
@@ -51,7 +51,7 @@ const Devices = () => {
           data?.map((device) => {
             return (
               <Grid item key={device.id}>
-                <GroupSwitch key={device.id} data={device} onChange={handleChange} onUpdate={handleUpdateDevice} />
+                <GroupSwitch key={device.id} data={device} onSwitchChange={handleSwitchChange} onUpdate={handleUpdateDevice} />
               </Grid>
             );
           })}
