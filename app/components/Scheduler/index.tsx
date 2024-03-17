@@ -167,6 +167,13 @@ const Scheduler = ({ initialValues = initialValuesProps, initialValueActive, onC
     handleChange(newTimes, "times");
   };
 
+  const onAddTime = () => {
+    const newTimes = [...dataform.times!];
+    const t = dayjs();
+    newTimes.push([t.format("YYYY-MM-DDTHH:mm:ssZ"), t.add(10, "minute").format("YYYY-MM-DDTHH:mm:ssZ")]);
+    handleChange(newTimes, "times");
+  };
+
   const convertStringToDate = (values: [string, string][]) => {
     const newValues: [Dayjs, Dayjs][] = values.map((value) => [dayjs(value[0]), dayjs(value[1])]);
     return newValues;
@@ -208,7 +215,13 @@ const Scheduler = ({ initialValues = initialValuesProps, initialValueActive, onC
           <DateList header={"date of month"} dates={dataform.dates} onSelectDate={onChecked} onClearAll={onClearAll} onSelectAll={onSelectAll} />
         </Grid>
         <Grid item xs={isMobile ? 12 : 9}>
-          <TimeSettings header={"time setting"} times={convertStringToDate(dataform.times)} onChange={onTimeChange} onRemove={onRemoveTime} />
+          <TimeSettings
+            header={"time setting"}
+            times={convertStringToDate(dataform.times)}
+            onChange={onTimeChange}
+            onRemove={onRemoveTime}
+            onAdd={onAddTime}
+          />
         </Grid>
       </Grid>
     </>

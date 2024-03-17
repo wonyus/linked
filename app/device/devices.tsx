@@ -20,8 +20,8 @@ const Devices = () => {
 
   useEffect(() => {
     getData(); // Call once when component mounts
-    // const intervalId = setInterval(getData, 15000); // Dispatch every 15 seconds
-    // return () => clearInterval(intervalId); // Cleanup on unmount
+    const intervalId = setInterval(getData, 15000); // Dispatch every 15 seconds
+    return () => clearInterval(intervalId); // Cleanup on unmount
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

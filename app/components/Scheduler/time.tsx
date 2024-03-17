@@ -1,5 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Grid, Icon, IconButton, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { Box, Grid, Icon, IconButton, Stack, Typography } from "@mui/material";
 import { MobileTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import React from "react";
@@ -9,9 +10,10 @@ interface TimeSettingProps {
   times: [Dayjs, Dayjs][];
   onChange: (values: Dayjs, idx: number, type: "on" | "off") => void;
   onRemove: (idx: number) => void;
+  onAdd: () => void;
 }
 
-const TimeSettings = ({ header, times, onChange }: TimeSettingProps) => {
+const TimeSettings = ({ header, times, onChange, onRemove, onAdd }: TimeSettingProps) => {
   return (
     <Grid
       container
@@ -33,7 +35,14 @@ const TimeSettings = ({ header, times, onChange }: TimeSettingProps) => {
       }}
     >
       <Grid item key={header} xs={12} justifyContent={"flex-start"}>
-        <Typography>{header}</Typography>
+        <Stack direction="row" spacing={1} sx={{ justifyContent: "space-between", alignContent: "center" }}>
+          <Typography variant="subtitle1" sx={{ alignSelf: "center" }}>
+            {header}
+          </Typography>
+          <IconButton size="medium" onClick={() => onAdd()} sx={{ paddingRight: 1.5 }}>
+            <AddIcon />
+          </IconButton>
+        </Stack>
       </Grid>
       <Grid item key={`${header}-time`} xs={12} justifyContent={"flex-start"}>
         {times.map((t, idx, arr) => (
@@ -94,7 +103,7 @@ const TimeSettings = ({ header, times, onChange }: TimeSettingProps) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={0.5} key={`${idx}-dash`} sx={{ alignSelf: "center", justifyContent: "center", display: "flex",pr:0.4 }}>
+              <Grid item xs={0.5} key={`${idx}-dash`} sx={{ alignSelf: "center", justifyContent: "center", display: "flex", pr: 0.4 }}>
                 <Typography key={`${idx}-time`} variant="subtitle2">
                   &nbsp;{`-`}&nbsp;
                 </Typography>
@@ -156,7 +165,7 @@ const TimeSettings = ({ header, times, onChange }: TimeSettingProps) => {
               </Grid>
               {arr.length > 1 && (
                 <Grid item xs={0.5} key={`${idx}-rm`} alignSelf={"center"}>
-                  <IconButton size="small" key={`${idx}-rm-btn`}>
+                  <IconButton size="small" key={`${idx}-rm-btn`} onClick={() => onRemove(idx)}>
                     <CloseIcon key={`${idx}-rm-ico`} />
                   </IconButton>
                 </Grid>
