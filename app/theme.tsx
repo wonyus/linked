@@ -1,8 +1,8 @@
 "use client";
 import { GlobalStyles } from "@mui/material";
-import { green, grey, deepPurple } from "@mui/material/colors";
-import React, { ReactNode } from "react";
+import { deepPurple,green, grey } from "@mui/material/colors";
 import { Experimental_CssVarsProvider as CssVarsProvider, experimental_extendTheme as extendTheme } from "@mui/material/styles";
+import React, { ReactNode } from "react";
 
 const theme = extendTheme({
   components: {

@@ -1,6 +1,8 @@
 "use client";
 import AdbIcon from "@mui/icons-material/Adb";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import MenuIcon from "@mui/icons-material/Menu";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { Fade, Link, Theme, useColorScheme } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -13,10 +15,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
-import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { Mode } from "@mui/system/cssVars/useCurrentColorScheme";
+import * as React from "react";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
 
