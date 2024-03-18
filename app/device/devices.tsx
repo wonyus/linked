@@ -2,7 +2,7 @@
 import GroupSwitch from "@Components/GroupSwitch";
 import { IBasicSwitchCommit, IDevice } from "@Interface/Devices/Switch/BasicSwitch";
 import { defaultPublishMessage } from "@Interface/Mesages/Message";
-import { Button, Grid } from "@mui/material";
+import { Box, Button, CircularProgress, Grid } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@Redux/hooks";
 import ReduxWrapper from "@Redux/Provider";
 import { getAllDevices, updateSwitch, updateSwitchDevice } from "@Redux/reducers/deviceSlice";
@@ -43,11 +43,15 @@ const Devices = () => {
         }
       });
   };
-
   return (
     <>
       <Grid container rowSpacing={2} columnSpacing={2}>
-        {data &&
+        {devicesData.status === "loading" && data.length === 0 && (
+          <Grid item component={Box} xs={12} sx={{ display: "flex", justifyContent: "space-around" }}>
+            <CircularProgress />
+          </Grid>
+        )}
+        {data.length > 0 &&
           data?.map((device) => {
             return (
               <Grid item key={device.id}>

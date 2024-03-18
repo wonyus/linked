@@ -1,12 +1,11 @@
 import "./globals.css";
 
-import Theme from "@App/theme";
 import Navbar from "@Components/Navbar";
-import { ThemeProvider } from "@mui/material";
 import type { Metadata } from "next";
 
 import AuthProvider from "./context/AuthProvider";
 import LocalizeDate from "./LocalizeDate";
+import ThemeApp from "./theme";
 
 export const metadata: Metadata = {
   title: "Linked",
@@ -17,14 +16,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <LocalizeDate>
-        <AuthProvider>
-          <ThemeProvider theme={Theme}>
+        <ThemeApp>
+          <AuthProvider>
             <body>
               <Navbar />
               <main style={{ margin: 20 }}>{children}</main>
             </body>
-          </ThemeProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </ThemeApp>
       </LocalizeDate>
     </html>
   );

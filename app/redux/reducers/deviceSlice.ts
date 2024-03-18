@@ -82,6 +82,7 @@ export const deviceSlice = createSlice({
     getAllDevices;
     builder.addCase(getAllDevices.pending, (state) => {
       state.status = "loading";
+      state.devices = state.devices;
     });
     builder.addCase(getAllDevices.fulfilled, (state, action) => {
       state.status = "success";

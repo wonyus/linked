@@ -17,7 +17,7 @@ import { BasicSwitch } from "./Switch";
 const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
   // width: "",
   elevation: 3,
-  background: grey[300],
+  background: theme.palette.background.paper,
   padding: theme.spacing(2),
   ...theme.typography.body2,
   textAlign: "center",
