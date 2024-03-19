@@ -1,6 +1,6 @@
 "use client";
 import { GlobalStyles } from "@mui/material";
-import { deepPurple,green, grey } from "@mui/material/colors";
+import { deepPurple, green, grey } from "@mui/material/colors";
 import { Experimental_CssVarsProvider as CssVarsProvider, experimental_extendTheme as extendTheme } from "@mui/material/styles";
 import React, { ReactNode } from "react";
 
@@ -73,7 +73,7 @@ const theme = extendTheme({
 
 const ThemeApp = ({ children }: { children: ReactNode }) => {
   return (
-    <CssVarsProvider theme={theme} defaultMode="system">
+    <CssVarsProvider theme={theme} modeStorageKey="mui-mode" defaultMode="light">
       <GlobalStyles
         styles={{
           body: { backgroundColor: theme.vars.palette.background.default },

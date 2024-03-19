@@ -91,16 +91,16 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
     <>
       <GroupSwitchStyled variant="elevation">
         <Stack spacing={4} direction="row" sx={{ placeContent: "space-around", alignItems: "center" }}>
-          <Icon color={device?.status_online ? "primary" : "secondary"} fontSize="medium">
+          <Icon color={data?.status_online ? "primary" : "secondary"} fontSize="medium">
             <PowerSettingsNewIcon />
           </Icon>
-          <Typography variant="body1">{device?.name}</Typography>
+          <Typography variant="body1">{data?.name}</Typography>
           <IconButton color="primary" aria-label="settings" size="small" onClick={handleOpen}>
             <SettingsOutlinedIcon />
           </IconButton>
         </Stack>
         <Grid container key={device.id} rowSpacing={2} columnSpacing={2} sx={{ paddingTop: 1 }}>
-          {device?.data?.map((sw: ISwitchData) => (
+          {data?.data?.map((sw: ISwitchData) => (
             <Grid item key={sw.switch_id} xs>
               <BasicSwitch key={sw.switch_id} data={sw} handleChange={onSwitchChange} />
             </Grid>
