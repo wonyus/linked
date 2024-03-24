@@ -38,3 +38,28 @@ export const getRefreshToken = async (refreshToken: string) => {
   const data = await res.data;
   return data;
 };
+
+export const getNewAccessToken = async (refreshToken: string) => {
+  try {
+    const res = await fetch(`${process.env.SERVER_URL}/user/refresh`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${refreshToken}`,
+      },
+      body: JSON.stringify({}),
+    });
+
+    if (!res.ok) {
+      // Handle non-successful response
+      throw new Error("Failed to refresh token");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    // Handle any errors occurred during the fetch request
+    console.error("Error fetching refresh token:", error);
+    throw error;
+  }
+};

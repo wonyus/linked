@@ -12,12 +12,9 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      
+
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5
-        with:
-            node-version: '20'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          

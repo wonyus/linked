@@ -22,3 +22,14 @@ export interface IBasicSwitchCommit {
   status: Boolean;
   id: number;
 }
+
+export interface IDeviceResponse {
+  message: string;
+  result: IDevice[];
+}
+
+export interface IAddDevice {
+  client_id: string;
+  type: string;
+  switch_amount: number;
+}

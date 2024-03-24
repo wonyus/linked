@@ -4,7 +4,6 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Backdrop, Box, Button, Grid, Icon, IconButton, Tab, Tabs, TextField, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -13,6 +12,8 @@ import { isMobile } from "react-device-detect";
 
 import MapScheduler from "./MapScheduler";
 import { BasicSwitch } from "./Switch";
+import { useDeleteDeviceMutation } from "@Redux/services/devices";
+import ConFirmDialog from "./Dialog/Confirm";
 
 const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
   // width: "",
@@ -38,6 +39,8 @@ interface TabPanelProps {
 }
 
 const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
+  const [deleteDevice, resultDeleDevice] = useDeleteDeviceMutation();
+  const [deleteDialog, setDeleteDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [device, setDevice] = React.useState<IDevice>(data ?? {});
 
@@ -64,6 +67,11 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
     setDevice(device);
     onUpdate(device);
     setOpen(false);
+  };
+
+  const handleDelete = () => {
+    deleteDevice(device.id);
+    setDeleteDialog(false);
   };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -175,13 +183,17 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
               <Button variant="contained" color="success" onClick={() => handleUpdateDevice(device)} sx={{ marginRight: 1 }}>
                 Save
               </Button>
-              <Button variant="contained" color="error" onClick={handleClose}>
+              <Button variant="contained" color="warning" onClick={handleClose} sx={{ marginRight: 1 }}>
                 Cancel
+              </Button>
+              <Button variant="contained" color="error" onClick={() => setDeleteDialog(true)}>
+                Delete
               </Button>
             </Box>
           </Paper>
         </Box>
       </Backdrop>
+      <ConFirmDialog open={deleteDialog} onClose={() => setDeleteDialog(false)} onConfirm={handleDelete} type={"Delete"} key={"delete-dialog"} />
     </>
   );
 };

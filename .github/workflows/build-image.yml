@@ -1,4 +1,4 @@
-name: build backend
+name: build image
 
 on:
   push:
@@ -26,10 +26,10 @@ jobs:
           ref: main
           token: ${{ secrets.PAT }}
           path: env
-      
+
       - name: list files2
         run: ls -la env/linked
-      
+
       - name: coppy env
         run: cp env/linked/.env .env
 
