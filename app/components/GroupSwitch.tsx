@@ -7,13 +7,13 @@ import { Backdrop, Box, Button, Grid, Icon, IconButton, Tab, Tabs, TextField, Ty
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import { useDeleteDeviceMutation } from "@Redux/services/devices";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
+import ConFirmDialog from "./Dialog/Confirm";
 import MapScheduler from "./MapScheduler";
 import { BasicSwitch } from "./Switch";
-import { useDeleteDeviceMutation } from "@Redux/services/devices";
-import ConFirmDialog from "./Dialog/Confirm";
 
 const GroupSwitchStyled = styled(Paper)(({ theme }) => ({
   // width: "",

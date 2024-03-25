@@ -1,11 +1,11 @@
 import { fetchSession, getNewAccessToken, updateSession } from "@App/http/axiosAuth";
 import { IDeviceResponse } from "@Interface/Devices/Switch/BasicSwitch";
+import { PublishMessage } from "@Interface/Mesages/Message";
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getSession } from "next-auth/react";
 
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { baseQueryWithReauth } from "./devices";
-import { PublishMessage } from "@Interface/Mesages/Message";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",

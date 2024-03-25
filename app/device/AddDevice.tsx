@@ -1,11 +1,11 @@
 "use client";
+import { IAddDevice } from "@Interface/Devices/Switch/BasicSwitch";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { Autocomplete, Backdrop, Box, Button, Grid, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
+import { useCreateDeviceMutation } from "@Redux/services/devices";
+import { GenerateID } from "@Utils/Generate";
 import React from "react";
 import { isMobile } from "react-device-detect";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { GenerateID } from "@Utils/Generate";
-import { useCreateDeviceMutation } from "@Redux/services/devices";
-import { IAddDevice } from "@Interface/Devices/Switch/BasicSwitch";
 
 const AddDevice = () => {
   const [createDevice, createDeviceResult] = useCreateDeviceMutation(); // Use the dispatch function from the store
