@@ -3,10 +3,22 @@ import { IDevice, ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { Backdrop, Box, Button, Grid, Icon, IconButton, Tab, Tabs, TextField, Typography } from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Icon from "@mui/material/Icon";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useDeleteDeviceMutation } from "@Redux/services/devices";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
@@ -42,11 +54,10 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
   const [deleteDevice, resultDeleDevice] = useDeleteDeviceMutation();
   const [deleteDialog, setDeleteDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const [device, setDevice] = React.useState<IDevice>(data ?? {});
-
-  const [tab, setTab] = React.useState(0);
   const [schedulerTab, setSchedulerTab] = React.useState(0);
+  const [tab, setTab] = React.useState("0");
 
+  const [device, setDevice] = React.useState<IDevice>({} as IDevice);
   const updateStateWithKey = (key: string, value: any) => {
     setDevice((prevState) => ({
       ...prevState,
@@ -56,10 +67,10 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
 
   const handleClose = () => {
     setOpen((status) => !status);
-    setDevice(data ?? {});
   };
 
   const handleOpen = () => {
+    setDevice(data);
     setOpen(true);
   };
 
@@ -74,7 +85,7 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
     setDeleteDialog(false);
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
   };
 
@@ -88,10 +99,13 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
   function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, paddingTop = true, ...other } = props;
 
-    return (
+    return value === index ? (
       <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
-        {value === index && <Box sx={{ paddingTop: paddingTop ? undefined : 0 }}>{children}</Box>}
+        {" "}
+        <Box sx={{ paddingTop: paddingTop ? undefined : 0 }}>{children}</Box>{" "}
       </div>
+    ) : (
+      <></>
     );
   }
 
@@ -107,7 +121,7 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
             <SettingsOutlinedIcon />
           </IconButton>
         </Stack>
-        <Grid container key={device.id} rowSpacing={2} columnSpacing={2} sx={{ paddingTop: 1 }}>
+        <Grid container key={data.id} rowSpacing={2} columnSpacing={2} sx={{ paddingTop: 1 }}>
           {data?.data?.map((sw: ISwitchData) => (
             <Grid item key={sw.switch_id} xs>
               <BasicSwitch key={sw.switch_id} data={sw} handleChange={onSwitchChange} />
@@ -126,59 +140,67 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
               display: "flex",
             }}
           >
-            <Box sx={{ display: "flex", justifyContent: "space-between", padding: 1 }}>
-              <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="General" {...a11yProps(0)} />
-                <Tab label="Scheduler" {...a11yProps(1)} />
-              </Tabs>
-              <IconButton color="default" aria-label="settings" size="small" onClick={handleClose}>
-                <CloseOutlinedIcon />
-              </IconButton>
-            </Box>
+            <TabContext value={tab}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", padding: 1 }}>
+                <TabList
+                  onChange={handleChange}
+                  aria-label="devices tab"
+                  sx={{ paddingTop: 0 }}
+                  scrollButtons="auto"
+                  variant="scrollable"
+                  allowScrollButtonsMobile
+                >
+                  <Tab label="General" value={"0"} />
+                  <Tab label="Scheduler" value={"1"} />
+                </TabList>
+                <IconButton color="default" aria-label="settings" size="small" onClick={handleClose}>
+                  <CloseOutlinedIcon />
+                </IconButton>
+              </Box>
 
-            <CustomTabPanel value={tab} index={0}>
-              <Grid container sx={{ padding: 1 }}>
-                <TextField
-                  key={device.id}
-                  id="outlined-basic"
-                  label="Name"
-                  variant="outlined"
-                  value={device.name ?? ""}
-                  fullWidth
-                  onChange={(e) => {
-                    updateStateWithKey("name", e.target.value);
-                  }}
-                  sx={{ paddingBottom: 2 }}
-                />
-                {device?.data?.map((sw: ISwitchData, idx: number) => (
+              <TabPanel value={"0"}>
+                <Grid container sx={{ padding: 1 }}>
                   <TextField
-                    key={sw.switch_id}
-                    id={`switch ${idx + 1}`}
-                    label={`switch ${idx + 1}`}
+                    key={device.id}
+                    id="outlined-basic"
+                    label="Name"
                     variant="outlined"
-                    value={sw.name ?? ""}
+                    value={device.name ?? ""}
                     fullWidth
                     onChange={(e) => {
-                      let newState = [...device.data];
-                      newState[idx] = { ...newState[idx], name: e.target.value };
-                      updateStateWithKey("data", newState);
+                      updateStateWithKey("name", e.target.value);
                     }}
                     sx={{ paddingBottom: 2 }}
                   />
-                ))}
-              </Grid>
-            </CustomTabPanel>
-            <CustomTabPanel value={tab} index={1} paddingTop={false}>
-              <MapScheduler
-                values={device.data}
-                tab={schedulerTab}
-                onTabChange={setSchedulerTab}
-                onChange={(e) => {
-                  updateStateWithKey("data", e);
-                }}
-              />
-            </CustomTabPanel>
-
+                  {device?.data?.map((sw: ISwitchData, idx: number) => (
+                    <TextField
+                      key={sw.switch_id}
+                      id={`switch ${idx + 1}`}
+                      label={`switch ${idx + 1}`}
+                      variant="outlined"
+                      value={sw.name ?? ""}
+                      fullWidth
+                      onChange={(e) => {
+                        let newState = [...device.data];
+                        newState[idx] = { ...newState[idx], name: e.target.value };
+                        updateStateWithKey("data", newState);
+                      }}
+                      sx={{ paddingBottom: 2 }}
+                    />
+                  ))}
+                </Grid>
+              </TabPanel>
+              <TabPanel value={"1"} sx={{ padding: 0 }}>
+                <MapScheduler
+                  values={device.data}
+                  tab={schedulerTab}
+                  onTabChange={setSchedulerTab}
+                  onChange={(e) => {
+                    updateStateWithKey("data", e);
+                  }}
+                />
+              </TabPanel>
+            </TabContext>
             <Box sx={{ display: "flex", justifyContent: "flex-end", padding: 1, marginTop: "auto" }}>
               <Button variant="contained" color="success" onClick={() => handleUpdateDevice(device)} sx={{ marginRight: 1 }}>
                 Save

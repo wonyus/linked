@@ -1,7 +1,16 @@
 "use client";
 import { IAddDevice } from "@Interface/Devices/Switch/BasicSwitch";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { Autocomplete, Backdrop, Box, Button, Grid, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useCreateDeviceMutation } from "@Redux/services/devices";
 import { GenerateID } from "@Utils/Generate";
 import React from "react";

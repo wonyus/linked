@@ -1,9 +1,11 @@
 {
   "extends": "next/core-web-vitals",
   "plugins": [
+    "mui-path-imports",
     "simple-import-sort"
   ],
   "rules": {
+    "mui-path-imports/mui-path-imports": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"
   },

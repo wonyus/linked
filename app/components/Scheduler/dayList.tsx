@@ -1,4 +1,8 @@
-import { Button, Grid, Stack, ToggleButton, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import ToggleButton from "@mui/material/ToggleButton";
+import Typography from "@mui/material/Typography";
 import React, { use } from "react";
 import { isMobile } from "react-device-detect";
 

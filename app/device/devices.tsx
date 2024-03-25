@@ -2,13 +2,12 @@
 import GroupSwitch from "@Components/GroupSwitch";
 import { IBasicSwitchCommit, IDevice } from "@Interface/Devices/Switch/BasicSwitch";
 import { defaultPublishMessage } from "@Interface/Mesages/Message";
-import { Box, Button, CircularProgress, Grid } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "@Redux/hooks";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
 import ReduxWrapper from "@Redux/Provider";
-import { getAllDevices, updateSwitch, updateSwitchDevice } from "@Redux/reducers/deviceSlice";
 import { useGetAllDevicesQuery, usePublishMutation, useUpdateDeviceMutation } from "@Redux/services/devices";
 import { stringifyPublishMessage } from "@Utils/FormatPublishMessage";
-import { useEffect } from "react";
 
 import AddDevice from "./AddDevice";
 
@@ -18,12 +17,23 @@ const Devices = () => {
   const [updateDevice, updateDeviceResult] = useUpdateDeviceMutation(); // Use the dispatch function from the store
   const [publish, publishResult] = usePublishMutation();
 
+  const buildPublishPayload = (switchId: number, checked: boolean) => {
+    return {
+      id: switchId,
+      status: checked,
+    };
+  };
+
   const handleSwitchChange = async (clientId: string, switchId: number, checked: boolean) => {
-    const data = defaultPublishMessage;
-    data.topic = "/command/" + clientId + "/switch";
-    const payload: IBasicSwitchCommit = { id: switchId, status: checked };
-    data.payload = [payload];
-    await publish(stringifyPublishMessage(data));
+    const payload = buildPublishPayload(switchId, checked);
+
+    await publish(
+      stringifyPublishMessage({
+        ...defaultPublishMessage,
+        topic: `/command/${clientId}/switch`,
+        payload: [payload],
+      })
+    );
   };
 
   const handleUpdateDevice = async (device: IDevice) => {

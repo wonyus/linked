@@ -1,9 +1,10 @@
 "use client";
 import { ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
-import { Switch, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
 import * as React from "react";
 
 const BasicSwitchStyled = styled(Paper)(({ theme }) => ({

@@ -1,6 +1,6 @@
 "use client";
-import { GlobalStyles } from "@mui/material";
 import { deepPurple, green, grey } from "@mui/material/colors";
+import GlobalStyles from "@mui/material/GlobalStyles";
 import { Experimental_CssVarsProvider as CssVarsProvider, experimental_extendTheme as extendTheme } from "@mui/material/styles";
 import React, { ReactNode } from "react";
 

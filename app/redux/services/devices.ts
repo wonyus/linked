@@ -18,7 +18,6 @@ const baseQuery = fetchBaseQuery({
 
 export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log("result", result);
 
   if (result.error && result.error.status === 401) {
     const session = await getSession();

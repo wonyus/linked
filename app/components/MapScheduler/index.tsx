@@ -1,6 +1,12 @@
 import Scheduler, { TSchedulerInitialValues } from "@Components/Scheduler";
 import { ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
 interface MapSchedulerProps {
@@ -47,27 +53,36 @@ const MapScheduler = ({ values, onChange, tab, onTabChange }: MapSchedulerProps)
   };
   return (
     <React.Fragment>
-      <Tabs value={tab} onChange={handleChange} aria-label="devices tab" sx={{ paddingTop: 0 }}>
-        {values &&
-          values.map((value, idx) => {
-            return <Tab label={value.name} key={idx} {...a11yProps(idx)} />;
-          })}
-      </Tabs>
-      <React.Fragment>
-        {values &&
-          values.map((value, idx) => {
-            return (
-              <CustomTabPanel value={tab} key={idx} index={idx}>
-                <Scheduler
-                  initialValues={value.scheduler}
-                  initialValueActive={value.scheduler_active}
-                  onCheckActive={(val) => handleActiveChange(val, idx)}
-                  onChange={(e) => handleTimeChange(e, idx)}
-                />
-              </CustomTabPanel>
-            );
-          })}
-      </React.Fragment>
+      <TabContext value={tab}>
+        <TabList
+          onChange={handleChange}
+          aria-label="devices tab"
+          sx={{ paddingTop: 0 }}
+          scrollButtons="auto"
+          variant="scrollable"
+          allowScrollButtonsMobile
+        >
+          {values &&
+            values.map((value, idx) => {
+              return <Tab label={value.name} key={idx} value={`${idx}`} />;
+            })}
+        </TabList>
+        <React.Fragment>
+          {values &&
+            values.map((value, idx) => {
+              return (
+                <TabPanel key={idx} value={`${idx}`}>
+                  <Scheduler
+                    initialValues={value.scheduler}
+                    initialValueActive={value.scheduler_active}
+                    onCheckActive={(val) => handleActiveChange(val, idx)}
+                    onChange={(e) => handleTimeChange(e, idx)}
+                  />
+                </TabPanel>
+              );
+            })}
+        </React.Fragment>
+      </TabContext>
     </React.Fragment>
   );
 };
