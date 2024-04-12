@@ -1,4 +1,4 @@
-import { getCsrfToken } from "next-auth/react";
+import { getCsrfToken, signOut } from "next-auth/react";
 
 import { axiosDefault } from "./axios";
 
@@ -49,9 +49,10 @@ export const getNewAccessToken = async (refreshToken: string) => {
       },
       body: JSON.stringify({}),
     });
-
+    if (res.status === 401) {
+      signOut();
+    }
     if (!res.ok) {
-      // Handle non-successful response
       throw new Error("Failed to refresh token");
     }
 

@@ -1,4 +1,5 @@
 "use client";
+import { SWLoading } from "@App/device/devices";
 import { IDevice, ISwitchData } from "@Interface/Devices/Switch/BasicSwitch";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
@@ -16,7 +17,6 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useDeleteDeviceMutation } from "@Redux/services/devices";
@@ -41,6 +41,7 @@ interface GroupSwitchProps {
   data: IDevice;
   onSwitchChange: (clientId: string, switchId: number, checked: boolean) => void;
   onUpdate: (device: IDevice) => void;
+  swloading: SWLoading;
 }
 
 interface TabPanelProps {
@@ -50,11 +51,11 @@ interface TabPanelProps {
   paddingTop?: boolean;
 }
 
-const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
+const GroupSwitch = ({ data, onSwitchChange, onUpdate, swloading }: GroupSwitchProps) => {
   const [deleteDevice, resultDeleDevice] = useDeleteDeviceMutation();
   const [deleteDialog, setDeleteDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const [schedulerTab, setSchedulerTab] = React.useState(0);
+  const [schedulerTab, setSchedulerTab] = React.useState("0");
   const [tab, setTab] = React.useState("0");
 
   const [device, setDevice] = React.useState<IDevice>({} as IDevice);
@@ -124,7 +125,13 @@ const GroupSwitch = ({ data, onSwitchChange, onUpdate }: GroupSwitchProps) => {
         <Grid container key={data.id} rowSpacing={2} columnSpacing={2} sx={{ paddingTop: 1 }}>
           {data?.data?.map((sw: ISwitchData) => (
             <Grid item key={sw.switch_id} xs>
-              <BasicSwitch key={sw.switch_id} data={sw} handleChange={onSwitchChange} />
+              <BasicSwitch
+                key={sw.switch_id}
+                data={sw}
+                disabled={!data?.status_online}
+                handleChange={onSwitchChange}
+                loading={swloading.loading && sw.switch_id == swloading.switchId}
+              />
             </Grid>
           ))}
         </Grid>

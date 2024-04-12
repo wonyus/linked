@@ -8,14 +8,29 @@ import Grid from "@mui/material/Grid";
 import ReduxWrapper from "@Redux/Provider";
 import { useGetAllDevicesQuery, usePublishMutation, useUpdateDeviceMutation } from "@Redux/services/devices";
 import { stringifyPublishMessage } from "@Utils/FormatPublishMessage";
+import React, { useEffect } from "react";
 
 import AddDevice from "./AddDevice";
 
+export interface SWLoading {
+  switchId: number;
+  loading: boolean;
+}
+
 const Devices = () => {
-  const { data, error, isLoading, isFetching, isSuccess } = useGetAllDevicesQuery(undefined, { pollingInterval: 15000 });
+  const { data, error, isLoading, isFetching, isSuccess, refetch } = useGetAllDevicesQuery(undefined, { pollingInterval: 15000 });
   const { message, result } = data || {}; // Add type guard to check if data is defined
   const [updateDevice, updateDeviceResult] = useUpdateDeviceMutation(); // Use the dispatch function from the store
   const [publish, publishResult] = usePublishMutation();
+  const [swLoading, setSwLoading] = React.useState<SWLoading>({ switchId: 0, loading: false });
+
+  useEffect(() => {
+    if (!isFetching) {
+      setSwLoading((state) => {
+        return { ...state, loading: false };
+      });
+    }
+  }, [isFetching]);
 
   const buildPublishPayload = (switchId: number, checked: boolean) => {
     return {
@@ -25,8 +40,9 @@ const Devices = () => {
   };
 
   const handleSwitchChange = async (clientId: string, switchId: number, checked: boolean) => {
-    const payload = buildPublishPayload(switchId, checked);
+    setSwLoading({ switchId, loading: true });
 
+    const payload = buildPublishPayload(switchId, checked);
     await publish(
       stringifyPublishMessage({
         ...defaultPublishMessage,
@@ -34,6 +50,10 @@ const Devices = () => {
         payload: [payload],
       })
     );
+    // count down 2 sec
+    setTimeout(async () => {
+      await refetch();
+    }, 1500);
   };
 
   const handleUpdateDevice = async (device: IDevice) => {
@@ -55,7 +75,7 @@ const Devices = () => {
           result?.map((device) => {
             return (
               <Grid item key={device.id}>
-                <GroupSwitch key={device.id} data={device} onSwitchChange={handleSwitchChange} onUpdate={handleUpdateDevice} />
+                <GroupSwitch key={device.id} data={device} onSwitchChange={handleSwitchChange} onUpdate={handleUpdateDevice} swloading={swLoading} />
               </Grid>
             );
           })}

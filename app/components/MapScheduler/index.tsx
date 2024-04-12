@@ -12,8 +12,8 @@ import React from "react";
 interface MapSchedulerProps {
   values: ISwitchData[];
   onChange: (values: ISwitchData[]) => void;
-  tab: number;
-  onTabChange: (tab: number) => void;
+  tab: string;
+  onTabChange: (tab: string) => void;
 }
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -22,7 +22,7 @@ interface TabPanelProps {
 }
 
 const MapScheduler = ({ values, onChange, tab, onTabChange }: MapSchedulerProps) => {
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     onTabChange(newValue);
   };
   function a11yProps(index: number) {

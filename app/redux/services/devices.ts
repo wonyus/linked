@@ -76,7 +76,6 @@ export const devicesApi = createApi({
         method: "POST",
         body: body,
       }),
-      invalidatesTags: ["Devices"],
     }),
   }),
 });
