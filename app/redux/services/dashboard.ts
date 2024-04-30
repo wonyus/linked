@@ -1,5 +1,5 @@
 import { IDashboardResponse } from "@App/home/dashboard";
-import { fetchSession, getNewAccessToken, updateSession } from "@App/http/axiosAuth";
+import { getNewAccessToken, updateSession } from "@App/http/axiosAuth";
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getSession } from "next-auth/react";
@@ -35,7 +35,7 @@ export const dashboardApi = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Dashboard"],
   endpoints: (builder) => ({
-    getAllDashboard: builder.query<IDashboardResponse,void>({
+    getAllDashboard: builder.query<IDashboardResponse, void>({
       query: () => ({
         url: "/user/get_dashboard",
         method: "GET",
@@ -45,4 +45,4 @@ export const dashboardApi = createApi({
 });
 
 // Export hooks for usage in functional components
-export const {useGetAllDashboardQuery} = dashboardApi;
+export const { useGetAllDashboardQuery } = dashboardApi;
