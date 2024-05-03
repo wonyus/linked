@@ -1,10 +1,9 @@
 import axios from "axios";
 
 import { fetchSession, getRefreshToken, updateSession } from "./axiosAuth";
-const BASE_URL = "http://localhost:4000/v1";
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.SERVER_URL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -14,7 +13,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    console.log(config.headers["Authorization"]);
+    // console.log(config.headers["Authorization"]);
 
     const session = await fetchSession();
     const data = await session.json();
@@ -47,7 +46,7 @@ axiosInstance.interceptors.response.use(
       const accessToken = resData.result.accessToken;
 
       if (accessToken) {
-        console.log("Access token refreshed!");
+        // console.log("Access token refreshed!");
 
         // Update the server-side session with the new access token
         await updateSession({ user: { accessToken: resData.result.accessToken, refreshToken: resData.result.refreshToken } });
@@ -67,7 +66,7 @@ axiosInstance.interceptors.response.use(
 export default axiosInstance;
 
 export const axiosDefault = axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.SERVER_URL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

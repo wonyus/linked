@@ -1,18 +1,23 @@
 "use client";
 import AdbIcon from "@mui/icons-material/Adb";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "@mui/material";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
+import { Theme, useColorScheme } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { Mode } from "@mui/system/cssVars/useCurrentColorScheme";
 import * as React from "react";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -29,9 +34,10 @@ const settings = [
 
 function Navbar() {
   const user = useCurrentUser();
-  
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const { mode, setMode } = useColorScheme();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -48,8 +54,41 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
+  const ModeIconButton = (mode: Mode | undefined): React.JSX.Element => {
+    return (
+      <>
+        {mode === "dark" && (
+          <Fade in={mode === "dark"} timeout={1500}>
+            <IconButton
+              onClick={() => {
+                setMode("light");
+              }}
+              color="inherit"
+              sx={{ mr: 1 }}
+            >
+              <WbSunnyIcon />
+            </IconButton>
+          </Fade>
+        )}
+        {mode === "light" && (
+          <Fade in={mode === "light"} timeout={1500}>
+            <IconButton
+              onClick={() => {
+                setMode("dark");
+              }}
+              color="inherit"
+              sx={{ mr: 1 }}
+            >
+              <DarkModeIcon />
+            </IconButton>
+          </Fade>
+        )}
+      </>
+    );
+  };
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" enableColorOnDark>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -137,6 +176,8 @@ function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            {user && ModeIconButton(mode)}
+
             {user && (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -144,7 +185,6 @@ function Navbar() {
                 </IconButton>
               </Tooltip>
             )}
-
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -162,8 +202,13 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting.text} onClick={handleCloseUserMenu}>
-                  <Typography component={Link} href={setting.href} textAlign="center" style={{ textDecoration: "none" }}>
+                <MenuItem key={setting.text} onClick={handleCloseUserMenu} sx={{ width: 120 }}>
+                  <Typography
+                    component={Link}
+                    href={setting.href}
+                    textAlign="center"
+                    sx={{ textDecoration: "none", color: (theme: Theme) => theme.palette.text.primary }}
+                  >
                     {setting.text}
                   </Typography>
                 </MenuItem>

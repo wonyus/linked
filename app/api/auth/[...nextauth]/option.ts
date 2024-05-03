@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
           provider: "github",
           profile_url: profile.avatar_url,
         };
-        const res = await fetch(process.env.MIDDLEWARE_URL + "/user/signin_oauth", {
+        const res = await fetch(process.env.SERVER_URL + "/user/signin_oauth", {
           method: "POST",
           body: JSON.stringify(credentialsValue),
           headers: { "Content-Type": "application/json" },
@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         const credentialsValue = { username: credentials?.username, password: credentials?.password };
-        const res = await fetch(process.env.MIDDLEWARE_URL + "/user/signin", {
+        const res = await fetch(process.env.SERVER_URL + "/user/signin", {
           method: "POST",
           body: JSON.stringify(credentialsValue),
           headers: { "Content-Type": "application/json" },

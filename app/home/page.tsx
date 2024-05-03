@@ -1,10 +1,12 @@
 "use client";
 // Remember you must use an AuthProvider for
 // client components to useSession
+import Scheduler from "@Components/Scheduler";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-import UserCard from "../components/UserCard";
+// import UserCard from "../components/UserCard";
+import Dashboard from "./dashboard";
 
 export default function HomePage() {
   // const user = useCurrentUser();
@@ -19,7 +21,8 @@ export default function HomePage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <UserCard user={session.user} pagetype={"Home"} />
+      {/* <UserCard user={session.user} pagetype={"Home"} /> */}
+      <Dashboard />
     </section>
   );
 }

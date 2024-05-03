@@ -1,3 +1,6 @@
+build:
+	set ANALYZE=true && yarn build
+
 build-image:
 	docker build -t wonyus/linked:latest .
 

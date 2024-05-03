@@ -14,7 +14,7 @@ export default withAuth(
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-    console.log(isApiAuthRoute, isPublicRoute, isAuthRoute)
+    // console.log(isApiAuthRoute, isPublicRoute, isAuthRoute)
     if (request.nextUrl.pathname.startsWith("/extra") && request.nextauth.token?.role !== "admin") {
       return NextResponse.rewrite(new URL("/denied", request.url));
     }
