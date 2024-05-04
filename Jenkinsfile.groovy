@@ -1,8 +1,6 @@
 pipeline {
     agent any
 
-    tools {    }
-
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
         DOCKER_REGISTRY_CREDENTIALS = 'docker-credential'
