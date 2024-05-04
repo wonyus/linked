@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        dockerTool 'docker'
+    }
+
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
         DOCKER_REGISTRY_CREDENTIALS = 'docker-credential'
@@ -10,6 +14,9 @@ pipeline {
         stage('Preparation') {
             steps {
                 sh 'docker version'
+                script {
+                    docker.version()
+                }
             }
         }
         // stage('Checkout') {
@@ -44,14 +51,14 @@ pipeline {
         //     }
         // }
 
-        // stage('Deploy') {
-        //     agent any
-        //     steps {
-        //         // Add your deployment steps here
-        //         // For example:
-        //         sh 'pwd'
-        //     }
-        // }
+    // stage('Deploy') {
+    //     agent any
+    //     steps {
+    //         // Add your deployment steps here
+    //         // For example:
+    //         sh 'pwd'
+    //     }
+    // }
     }
 
     post {
