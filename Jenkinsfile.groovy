@@ -1,64 +1,46 @@
 pipeline {
     agent any
 
-    tools {
-        dockerTool 'docker'
-    }
-
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
         DOCKER_REGISTRY_CREDENTIALS = 'docker-credential'
+        DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com' // Update with your registry URL
+        DOCKER_REGISTRY_USERNAME = credentials('YOUR_REGISTRY_USERNAME_ID') // Update with your registry username credential ID
+        DOCKER_REGISTRY_PASSWORD = credentials('YOUR_REGISTRY_PASSWORD_ID') // Update with your registry password credential ID
     }
 
     stages {
-        stage('Preparation') {
+        stage('Checkout') {
             steps {
-                sh 'docker version'
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
                 script {
-                    docker.version()
+                    buildDockerImage("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
                 }
             }
         }
-        // stage('Checkout') {
-        //     agent any
-        //     steps {
-        //         checkout scm
-        //     }
-        // }
 
-        // stage('Build Docker Image') {
-        //     agent {
-        //         docker {
-        //             image 'node:18-alpine'
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             app = docker.build("${DOCKER_IMAGE_NAME}")
-        //         }
-        //     }
-        // }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withDockerRegistry(url: DOCKER_REGISTRY_URL, credentialsId: 'YOUR_REGISTRY_CREDENTIALS_ID') {
+                        pushDockerImage("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
+                        pushDockerImage("${DOCKER_IMAGE_NAME}:latest")
+                    }
+                }
+            }
+        }
 
-        // stage('Push Docker Image') {
-        //     agent any
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_REGISTRY_CREDENTIALS}") {
-        //                 app.push("${env.BUILD_NUMBER}")
-        //                 app.push('latest')
-        //             }
-        //         }
-        //     }
-        // }
-
-    // stage('Deploy') {
-    //     agent any
-    //     steps {
-    //         // Add your deployment steps here
-    //         // For example:
-    //         sh 'pwd'
-    //     }
-    // }
+        stage('Deploy') {
+            steps {
+                // Add your deployment steps here
+                sh 'pwd'
+            }
+        }
     }
 
     post {
@@ -69,4 +51,12 @@ pipeline {
             echo 'Build or deployment failed!'
         }
     }
+}
+
+def buildDockerImage(tag) {
+    sh "docker build -t ${tag} ."
+}
+
+def pushDockerImage(tag) {
+    sh "docker push ${tag}"
 }
