@@ -4,9 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
         DOCKER_REGISTRY_CREDENTIALS = 'docker-credential'
-        DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com' // Update with your registry URL
-        DOCKER_REGISTRY_USERNAME = credentials('YOUR_REGISTRY_USERNAME_ID') // Update with your registry username credential ID
-        DOCKER_REGISTRY_PASSWORD = credentials('YOUR_REGISTRY_PASSWORD_ID') // Update with your registry password credential ID
+        DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
     }
 
     stages {
@@ -27,7 +25,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(url: DOCKER_REGISTRY_URL, credentialsId: 'YOUR_REGISTRY_CREDENTIALS_ID') {
+                    withDockerRegistry(url: DOCKER_REGISTRY_URL, credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
                         pushDockerImage("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
                         pushDockerImage("${DOCKER_IMAGE_NAME}:latest")
                     }
