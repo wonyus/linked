@@ -1,9 +1,7 @@
 pipeline {
     agent any
 
-    tools {
-        dockerTool 'Docker'
-    }
+    tools {    }
 
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
@@ -20,7 +18,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    app = dockerTool.build("${DOCKER_IMAGE_NAME}")
+                    app = docker.build("${DOCKER_IMAGE_NAME}")
                 }
             }
         }
@@ -28,7 +26,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    dockerTool.withRegistry('https://registry.hub.docker.com', "${DOCKER_REGISTRY_CREDENTIALS}") {
+                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_REGISTRY_CREDENTIALS}") {
                         app.push("${env.BUILD_NUMBER}")
                         app.push('latest')
                     }
