@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    buildDockerImage("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
+                    buildDockerImage("${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline {
 }
 
 def buildDockerImage(tag) {
-    sh "docker build -t ${tag} ."
+    sh "docker build -t ${DOCKER_IMAGE_NAME}:${tag} -t ${DOCKER_IMAGE_NAME}:latest ."
 }
 
 def pushDockerImage(tag) {
