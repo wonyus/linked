@@ -25,9 +25,11 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(url: DOCKER_REGISTRY_URL, credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
+                    withDockerRegistry(url: "${DOCKER_REGISTRY_URL}", credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
                         pushDockerImage("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
                         pushDockerImage("${DOCKER_IMAGE_NAME}:latest")
+
+                        sh "docker logout ${DOCKER_REGISTRY_URL}"
                     }
                 }
             }
