@@ -1,38 +1,32 @@
 pipeline {
     agent any
-    
+    tools {
+        dockerTool 'Docker'
+    }
+
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
         DOCKER_REGISTRY_CREDENTIALS = 'docker-credential'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        
+
         stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
-                    docker.build("${DOCKER_IMAGE_NAME}:latest")
-                }
-            }
+            app = docker.build("${DOCKER_IMAGE_NAME}")
         }
-        
+
         stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://hub.docker.com/r/wonyus/linked', "${DOCKER_REGISTRY_CREDENTIALS}") {
-                        docker.image("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}").push()
-                        docker.image("${DOCKER_IMAGE_NAME}:latest").push()
-                    }
-                }
+            docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_REGISTRY_CREDENTIALS}") {
+                app.push("${env.BUILD_NUMBER}")
+                app.push('latest')
             }
         }
-        
+
         stage('Deploy') {
             steps {
                 // Add your deployment steps here
@@ -41,7 +35,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo 'Build and deployment successful!'
