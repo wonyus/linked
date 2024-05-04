@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(url: "${DOCKER_REGISTRY_URL}", credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
-                        // docker login "-u ${DOCKER_REGISTRY_USERNAME} -p ${DOCKER_REGISTRY_PASSWORD} ${DOCKER_REGISTRY_URL}"
+                        docker login "-u ${DOCKER_REGISTRY_USERNAME} -p ${DOCKER_REGISTRY_PASSWORD} ${DOCKER_REGISTRY_URL}"
 
                         pushDockerImage("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}")
                         pushDockerImage("${DOCKER_IMAGE_NAME}:latest")
