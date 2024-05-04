@@ -1,6 +1,4 @@
 pipeline {
-    def app
-
     agent any
 
     tools {
