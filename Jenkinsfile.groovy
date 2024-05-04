@@ -1,5 +1,8 @@
 pipeline {
+    def app
+
     agent any
+
     tools {
         dockerTool 'Docker'
     }
