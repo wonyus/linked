@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
@@ -8,6 +8,7 @@ pipeline {
 
     stages {
         stage('Checkout') {
+            agent any
             steps {
                 checkout scm
             }
@@ -27,6 +28,7 @@ pipeline {
         }
 
         stage('Push Docker Image') {
+            agent any
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_REGISTRY_CREDENTIALS}") {
@@ -38,6 +40,7 @@ pipeline {
         }
 
         stage('Deploy') {
+            agent any
             steps {
                 // Add your deployment steps here
                 // For example:
