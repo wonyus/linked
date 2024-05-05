@@ -16,7 +16,7 @@ export default async function DevicePage() {
   return (
     <>
       <Devices />
-      <UserCard user={user} pagetype={"Device"} />
+      {/* <UserCard user={user} pagetype={"Device"} /> */}
     </>
   );
 }
