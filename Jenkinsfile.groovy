@@ -5,6 +5,8 @@ pipeline {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
         DOCKER_REGISTRY_CREDENTIALS = 'docker-credential'
         DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
+        SCRIPT_PATH = '/home/wonyus/deployment/linked/update_image_tag.sh'
+        VERSION_FILE = 'version.txt'
     }
 
     stages {
@@ -17,7 +19,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    buildDockerImage("${env.BUILD_NUMBER}")
+                    buildDockerImage("${env.GIT_COMMIT}")
                 }
             }
         }
@@ -26,7 +28,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(url: "${DOCKER_REGISTRY_URL}", credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
-                        docker.image("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}").push()
+                        docker.image("${DOCKER_IMAGE_NAME}:${env.GIT_COMMIT}").push()
                         docker.image("${DOCKER_IMAGE_NAME}:latest").push()
                     }
                 }
@@ -34,9 +36,9 @@ pipeline {
         }
 
         stage('Deploy') {
+            agent { label 'batch-node' }
             steps {
-                // Add your deployment steps here
-                sh 'pwd'
+                sh "${SCRIPT_PATH} ${VERSION_FILE} ${env.GIT_COMMIT}"
             }
         }
     }
@@ -53,8 +55,4 @@ pipeline {
 
 def buildDockerImage(tag) {
     sh "docker build -t ${DOCKER_IMAGE_NAME}:${tag} -t ${DOCKER_IMAGE_NAME}:latest ."
-}
-
-def pushDockerImage(tag) {
-    sh "docker push ${tag}"
 }
