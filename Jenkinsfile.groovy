@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy') {
             agent { label 'kube-node' }
             steps {
-                sh "${SCRIPT_PATH} ${VERSION_FILE} ${env.GIT_COMMIT}"
+                // sh "${SCRIPT_PATH} ${VERSION_FILE} ${env.GIT_COMMIT}"
                 sh '/snap/bin/microk8s.kubectl rollout restart deployment/linked'
             }
         }
