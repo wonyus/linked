@@ -40,7 +40,7 @@ pipeline {
             agent { label 'kube-node' }
             steps {
                 // sh "${SCRIPT_PATH} ${VERSION_FILE} ${env.GIT_COMMIT}"
-                sh '/snap/bin/microk8s.kubectl rollout restart deployment/linked'
+                sh '/snap/bin/microk8s.kubectl rollout restart -f deployment.yaml --selector=component=deploy'
             }
         }
     }
