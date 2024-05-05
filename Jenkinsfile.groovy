@@ -40,7 +40,7 @@ pipeline {
             agent { label 'kube-node' }
             steps {
                 sh "${SCRIPT_PATH} ${VERSION_FILE} ${env.GIT_COMMIT}"
-                sh "kubectl apply -f ${DEPLOYMENT_FILE}"
+                sh "/snap/bin/microk8s.kubectl apply -f ${DEPLOYMENT_FILE}"
             }
         }
     }
