@@ -7,6 +7,7 @@ pipeline {
         DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
         SCRIPT_PATH = '/home/wonyus/deployment/linked/update_image_tag.sh'
         VERSION_FILE = 'version.txt'
+        DEPLOYMENT_FILE = '/home/wonyus/deployment/linked/deployment.yaml'
     }
 
     stages {
@@ -36,9 +37,10 @@ pipeline {
         }
 
         stage('Deploy') {
-            agent { label 'batch-node' }
+            agent { label 'kube-node' }
             steps {
                 sh "${SCRIPT_PATH} ${VERSION_FILE} ${env.GIT_COMMIT}"
+                sh "kubectl apply -f ${DEPLOYMENT_FILE}"
             }
         }
     }
