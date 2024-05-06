@@ -7,7 +7,7 @@ pipeline {
         DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
         SCRIPT_PATH = '/home/wonyus/deployment/linked/update_image_tag.sh'
         VERSION_FILE = 'version.txt'
-        DEPLOYMENT_FILE = '/home/wonyus/deployment/linked/deployment.yaml'
+        DEPLOYMENT_FILE = '.kube/deployment.yaml'
     }
 
     stages {
