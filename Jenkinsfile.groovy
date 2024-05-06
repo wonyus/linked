@@ -50,10 +50,9 @@ pipeline {
         }
 
         stage('Deploy') {
-            agent { label 'kube-node' }
             steps {
-                sh '/snap/bin/microk8s.kubectl delete deployment linked -n linked'
-                sh "/snap/bin/microk8s.kubectl apply -f ${DEPLOYMENT_FILE}"
+                sh 'kubectl delete deployment linked -n linked'
+                sh "kubectl apply -f ${DEPLOYMENT_FILE}"
             }
         }
     }
