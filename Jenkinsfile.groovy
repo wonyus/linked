@@ -17,6 +17,19 @@ pipeline {
             }
         }
 
+        stage('Checkout env') {
+            steps {
+                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'temp']], userRemoteConfigs: [[credentialsId: 'ssh-github', url: 'git@github.com:wonyus/ci.git']])
+            }
+        }
+
+        stage('Move Checkout env') {
+            steps {
+                sh "cp temp/linked/.env .env"
+                sh "rm -rf temp"
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -39,8 +52,8 @@ pipeline {
         stage('Deploy') {
             agent { label 'kube-node' }
             steps {
-                // sh "${SCRIPT_PATH} ${VERSION_FILE} ${env.GIT_COMMIT}"
-                sh "/snap/bin/microk8s.kubectl rollout restart -f ${DEPLOYMENT_FILE} --selector=component=deploy"
+                sh '/snap/bin/microk8s.kubectl delete deployment linked -n linked'
+                sh "/snap/bin/microk8s.kubectl apply -f ${DEPLOYMENT_FILE}"
             }
         }
     }
