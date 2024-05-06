@@ -2,7 +2,7 @@ name: build image
 
 on:
   push:
-    branches: ["development"]
+    branches: ["developmentttt"]
     # paths: ["src/**", "package.json"]
 
 jobs:
