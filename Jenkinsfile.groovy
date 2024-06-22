@@ -1,9 +1,10 @@
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
-    agent any
+    agent { label 'NODE_BATCH' }
 
     environment {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
-        DOCKER_REGISTRY_CREDENTIALS = 'docker-credential'
+        DOCKER_REGISTRY_CREDENTIALS = 'docker-hub-wonyus'
         DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
         SCRIPT_PATH = '/home/wonyus/deployment/linked/update_image_tag.sh'
         VERSION_FILE = 'version.txt'
@@ -19,14 +20,15 @@ pipeline {
 
         stage('Checkout env') {
             steps {
+                /* groovylint-disable-next-line LineLength */
                 checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'temp']], userRemoteConfigs: [[credentialsId: 'ssh-github', url: 'git@github.com:wonyus/ci.git']])
             }
         }
 
         stage('Move Checkout env') {
             steps {
-                sh "cp temp/linked/.env .env"
-                sh "rm -rf temp"
+                sh 'cp temp/linked/.env .env'
+                sh 'rm -rf temp'
             }
         }
 
@@ -41,6 +43,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+                    /* groovylint-disable-next-line NestedBlockDepth */
                     withDockerRegistry(url: "${DOCKER_REGISTRY_URL}", credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
                         docker.image("${DOCKER_IMAGE_NAME}:${env.GIT_COMMIT}").push()
                         docker.image("${DOCKER_IMAGE_NAME}:latest").push()
@@ -67,6 +70,7 @@ pipeline {
     }
 }
 
+/* groovylint-disable-next-line FactoryMethodName, MethodParameterTypeRequired, MethodReturnTypeRequired, NoDef */
 def buildDockerImage(tag) {
     sh "docker build -t ${DOCKER_IMAGE_NAME}:${tag} -t ${DOCKER_IMAGE_NAME}:latest ."
 }
