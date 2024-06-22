@@ -6,8 +6,8 @@ pipeline {
         DOCKER_IMAGE_NAME = 'wonyus/linked'
         DOCKER_REGISTRY_CREDENTIALS = 'docker-hub-wonyus'
         DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
-        SCRIPT_PATH = '/home/wonyus/deployment/linked/update_image_tag.sh'
-        VERSION_FILE = 'version.txt'
+        GIT_CREDENTIALS = 'github-wonyus'
+        GIT_REPO_URL = 'git@github.com:wonyus/ci.git'
         DEPLOYMENT_FILE = '.kube/deployment.yaml'
     }
 
@@ -21,7 +21,7 @@ pipeline {
         stage('Checkout env') {
             steps {
                 /* groovylint-disable-next-line LineLength */
-                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'temp']], userRemoteConfigs: [[credentialsId: 'ssh-github', url: 'git@github.com:wonyus/ci.git']])
+                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'temp']], userRemoteConfigs: [[credentialsId: "${GIT_CREDENTIALS}", url: "${GIT_REPO_URL}"]])
             }
         }
 
