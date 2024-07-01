@@ -19,9 +19,9 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Mode } from "@mui/system/cssVars/useCurrentColorScheme";
 import * as React from "react";
+import { text } from "stream/consumers";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { text } from "stream/consumers";
 
 const pages = [
   { text: "Home", href: "home" },

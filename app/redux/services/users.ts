@@ -1,8 +1,8 @@
 
+import { ChangePassword } from "@Interface/ChangePassword/ChangePassword";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { baseQueryWithReauth } from "./devices";
-import { ChangePassword } from "@Interface/ChangePassword/ChangePassword";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",

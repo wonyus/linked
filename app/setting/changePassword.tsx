@@ -1,6 +1,8 @@
 "use client";
 
-import { Button, Container, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import TextField from "@mui/material/TextField";
 import ReduxWrapper from "@Redux/Provider";
 import { useChangePasswordMutation } from "@Redux/services/users";
 import React from "react";

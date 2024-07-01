@@ -1,5 +1,7 @@
-import { useCurresntUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+
+import { useCurresntUser } from "@/lib/auth";
+
 import ChangePassword from "./changePassword";
 
 export default async function SettingPage() {
