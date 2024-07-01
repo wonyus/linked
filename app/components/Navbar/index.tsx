@@ -21,6 +21,7 @@ import { Mode } from "@mui/system/cssVars/useCurrentColorScheme";
 import * as React from "react";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { text } from "stream/consumers";
 
 const pages = [
   { text: "Home", href: "home" },
@@ -29,6 +30,7 @@ const pages = [
 const settings = [
   { text: "Home", href: "home" },
   { text: "Device", href: "device" },
+  {text: "Setting", href: "setting"},
   { text: "Logout", href: "/api/auth/signout" },
 ];
 
