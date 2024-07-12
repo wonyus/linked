@@ -37,4 +37,5 @@ jobs:
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
-          eslint_command_prefix: "yarn lint:fix"
+          eslint_args: "--fix"
+          eslint_extensions: "js,jsx,ts,tsx"
