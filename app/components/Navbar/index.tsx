@@ -30,7 +30,7 @@ const pages = [
 const settings = [
   { text: "Home", href: "home" },
   { text: "Device", href: "device" },
-  {text: "Setting", href: "setting"},
+  { text: "Setting", href: "setting" },
   { text: "Logout", href: "/api/auth/signout" },
 ];
 
@@ -98,7 +98,7 @@ function Navbar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -109,7 +109,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            LINKED
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -167,7 +167,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            LINKED
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
