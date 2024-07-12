@@ -11,6 +11,9 @@ on:
     branches:
       - master
       - development
+permissions:
+  checks: write
+  contents: write
 
 jobs:
   run-linters:
