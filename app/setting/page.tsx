@@ -1,43 +1,41 @@
-"use client"
+"use client";
 
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import React from 'react';
-import { maxHeaderSize } from 'http';
-import ChangePassword from './changePassword';
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import React from "react";
+import ChangePassword from "./changePassword";
+import { SxProps, Theme } from "@mui/material";
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+  sx?: SxProps<Theme>;
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, sx, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
+      sx={{ paddingTop: 2, ...sx }}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
+      {value === index && <Box>{children}</Box>}
+    </Box>
   );
 }
 
 function a11yProps(index: number) {
   return {
     id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
 
@@ -49,22 +47,18 @@ export default function VerticalTabs() {
   };
 
   return (
-    <Box sx={{flexGrow: 1,display: 'flex'}} >
+    <Box sx={{ flexGrow: 1, display: "flex" }}>
       <Tabs
         orientation="vertical"
         variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: 'divider' }}
+        sx={{ borderRight: 1, paddingRight: 5, borderColor: "divider" }}
       >
         <Tab label="Profile" {...a11yProps(0)} />
         <Tab label="Edit Setting" {...a11yProps(1)} />
         <Tab label="Change Password" {...a11yProps(2)} />
-        {/* <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} /> */}
       </Tabs>
       <TabPanel value={value} index={0}>
         Profile
@@ -72,22 +66,9 @@ export default function VerticalTabs() {
       <TabPanel value={value} index={1}>
         Edit Setting
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Change Password
+      <TabPanel value={value} index={2} sx={{ width: "70%" }}>
         <ChangePassword />
       </TabPanel>
-      {/* <TabPanel value={value} index={3}>
-        Item Four
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
-      </TabPanel> */}
     </Box>
   );
 }
