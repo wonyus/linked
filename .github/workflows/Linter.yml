@@ -43,3 +43,4 @@ jobs:
         with:
           eslint: true
           eslint_args: "--fix"
+          eslint_extensions: "js,jsx,ts,tsx"
