@@ -4,9 +4,9 @@ import Navbar from "@Components/Navbar";
 import type { Metadata } from "next";
 
 import AuthProvider from "./context/AuthProvider";
+import NotifyStackProvider from "./context/NotifyStackProvider";
 import LocalizeDate from "./LocalizeDate";
 import ThemeApp from "./theme";
-import NotifyStackProvider from "./context/NotifyStackProvider";
 
 export const metadata: Metadata = {
   title: "Linked",

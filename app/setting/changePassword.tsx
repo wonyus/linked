@@ -9,8 +9,8 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import ReduxWrapper from "@Redux/Provider";
 import { useChangePasswordMutation } from "@Redux/services/users";
-import React from "react";
 import { enqueueSnackbar } from "notistack";
+import React from "react";
 
 const ChangePassword = () => {
   const [oldPassword, setoldPassword] = React.useState<string>("");
