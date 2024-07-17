@@ -1,3 +1,6 @@
+BRANCH := $(shell git branch --show-current)
+TAG := $(shell for /f "tokens=*" %%t in ('git tag --list "v*" --sort=-v:refname') do @echo %%t & exit)
+
 build:
 	set ANALYZE=true && yarn build
 
@@ -17,4 +20,4 @@ remove-tag:
 	git tag -d $(version) && git push origin :refs/tags/$(version)
 
 release:
-	git checkout master && git pull && npm version $(version) && git push && git push --tags
+	git checkout $(BRANCH) && git pull && npm version $(TAG) && git push && git push --tags
