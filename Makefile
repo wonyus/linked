@@ -19,5 +19,8 @@ start:
 remove-tag:
 	git tag -d $(version) && git push origin :refs/tags/$(version)
 
+retag:
+	git tag -d $(TAG) && git push origin :refs/tags/$(TAG) && git tag $(TAG) && git push origin $(TAG)
+
 release:
 	git checkout $(BRANCH) && git pull && npm version $(TAG) && git push && git push --tags
