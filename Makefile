@@ -12,3 +12,9 @@ pull-image:
 
 start:
 	docker run --env-file ./.env -p 8080:8080 --name node-emqx wonyus/node-emqx:latest
+	
+remove-tag:
+	git tag -d $(version) && git push origin :refs/tags/$(version)
+
+release:
+	git checkout master && git pull && npm version $(version) && git push && git push --tags
