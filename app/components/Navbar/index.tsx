@@ -26,6 +26,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 const pages = [
   { text: "Home", href: "home" },
   { text: "Device", href: "device" },
+  { text: "Ai", href: "ai" },
 ];
 const settings = [
   { text: "Home", href: "home" },
