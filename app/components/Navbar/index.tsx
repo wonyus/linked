@@ -26,6 +26,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 const pages = [
   { text: "Home", href: "home" },
   { text: "Device", href: "device" },
+  { text: "Ai", href: "ai" },
 ];
 const settings = [
   { text: "Home", href: "home" },
@@ -188,7 +189,7 @@ function Navbar() {
               </Tooltip>
             )}
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: "45px", width: 240 }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -198,19 +199,18 @@ function Navbar() {
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "right",
+                horizontal: "center",
+              }}
+              MenuListProps={{
+                "aria-labelledby": "settings-menu",
+                role: "listbox",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting.text} onClick={handleCloseUserMenu} sx={{ width: 120 }}>
-                  <Typography
-                    component={Link}
-                    href={setting.href}
-                    textAlign="center"
-                    sx={{ textDecoration: "none", color: (theme: Theme) => theme.palette.text.primary }}
-                  >
+                <MenuItem key={setting.text} onClick={handleCloseUserMenu} sx={{ width: 120 }} component={Link} href={setting.href}>
+                  <Typography textAlign="center" sx={{ textDecoration: "none", color: (theme: Theme) => theme.palette.text.primary }}>
                     {setting.text}
                   </Typography>
                 </MenuItem>

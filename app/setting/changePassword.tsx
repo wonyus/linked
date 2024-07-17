@@ -9,6 +9,7 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import ReduxWrapper from "@Redux/Provider";
 import { useChangePasswordMutation } from "@Redux/services/users";
+import { enqueueSnackbar } from "notistack";
 import React from "react";
 
 const ChangePassword = () => {
@@ -41,19 +42,17 @@ const ChangePassword = () => {
       setConfirmPasswordError(true);
       return;
     } else {
-      try {
-        await changePassword({ old_password: oldPassword, new_password: newPassword }).then((res: any) => {
-          if (res?.data?.message === "success") {
-            alert("Password changed successfully");
-            setoldPassword("");
-            setNewPassword("");
-            setConfirmPassword("");
-            setConfirmPasswordError(false);
-          }
-        });
-      } catch (error) {
-        alert("Password change failed");
-      }
+      await changePassword({ old_password: oldPassword, new_password: newPassword }).then((res: any) => {
+        if (res?.data?.message === "success") {
+          enqueueSnackbar("Password changed successfully", { variant: "success" });
+          setoldPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+          setConfirmPasswordError(false);
+        } else {
+          enqueueSnackbar("Error changing password", { variant: "error" });
+        }
+      });
     }
   };
 

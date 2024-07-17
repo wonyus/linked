@@ -1,5 +1,7 @@
+const { version } = require('./package.json');
 const dotenv = require('dotenv');
 dotenv.config();
+
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
@@ -8,6 +10,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+    publicRuntimeConfig: {
+        version,
+    },
     cacheHandler: require.resolve('./cache-handler.js'),
     cacheMaxMemorySize: 0, // disable default in-memory caching
     output: process.env.BUILD_STANDALONE === "true" ? "standalone" : "standalone",
