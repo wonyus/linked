@@ -9,7 +9,7 @@ export const authOptions: NextAuthOptions = {
       async profile(profile: GithubProfile) {
         const credentialsValue = {
           o_id: profile.id,
-          name: profile.name,
+          name: profile.login,
           username: profile.login,
           signin_type: "oauth",
           provider: "github",
