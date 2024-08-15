@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import Image from "next/image";
+import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 const videoConstraints = {
@@ -49,7 +50,7 @@ export default function Ai() {
             </button>
           </div>
           <div>
-            <img src={url} alt="Screenshot" />
+            <Image src={url} alt="capture" width={540} height={360} />
           </div>
         </>
       )}
