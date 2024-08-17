@@ -9,7 +9,7 @@ pipeline {
         GIT_CREDENTIALS = 'github-wonyus'
         GIT_REPO_URL = 'git@github.com:wonyus/ci.git'
         DEPLOYMENT_FILE = '.kube/deployment.yaml'
-        BRANCH_NAME = "${parameters.Branch}"
+        BRANCH_NAME = "${env.Branch}"
     }
 
     stages {
