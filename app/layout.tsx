@@ -5,9 +5,9 @@ import type { Metadata } from "next";
 
 import AuthProvider from "./context/AuthProvider";
 import NotifyStackProvider from "./context/NotifyStackProvider";
+import Footer from "./Footer";
 import LocalizeDate from "./LocalizeDate";
 import ThemeApp from "./theme";
-import Footer from "./Footer";
 
 export const metadata: Metadata = {
   title: "Linked",

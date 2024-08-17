@@ -1,6 +1,6 @@
 // "use client";
-import React, { Suspense } from "react";
 import getConfig from "next/config";
+import React, { Suspense } from "react";
 
 const config = getConfig();
 
