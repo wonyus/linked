@@ -9,12 +9,13 @@ pipeline {
         GIT_CREDENTIALS = 'github-wonyus'
         GIT_REPO_URL = 'git@github.com:wonyus/ci.git'
         DEPLOYMENT_FILE = '.kube/deployment.yaml'
+        BRANCH_NAME = "${parameters.Branch}"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout scm: scmGit(branches: [[name: "${BRANCH_NAME}"]])
             }
         }
 
