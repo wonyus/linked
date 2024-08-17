@@ -34,6 +34,7 @@ const nextConfig = {
         GITHUB_ID: process.env.GITHUB_ID,
         GITHUB_SECRET: process.env.GITHUB_SECRET,
         SERVER_URL: process.env.SERVER_URL,
+        GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
     },
 }
 
