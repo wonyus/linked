@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 
 // import UserCard from "../components/UserCard";
 import Dashboard from "./dashboard";
+import DashboardScheduler from "./dashboardScheduler";
 
 export default function HomePage() {
   // const user = useCurrentUser();
@@ -23,6 +24,7 @@ export default function HomePage() {
     <section className="flex flex-col gap-6">
       {/* <UserCard user={session.user} pagetype={"Home"} /> */}
       <Dashboard />
+      <DashboardScheduler />
     </section>
   );
 }
